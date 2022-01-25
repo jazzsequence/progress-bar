@@ -1,6 +1,6 @@
 === Progress Bar ===
 Contributors: jazzs3quence
-Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AWM2TG3D4HYQ6
+Donate link: https://paypal.me/jazzsequence
 Tags: progress bar, css3, progress, shortcode
 Requires at least: 2.8
 Tested up to: 4.4
