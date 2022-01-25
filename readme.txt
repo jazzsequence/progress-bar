@@ -4,9 +4,9 @@ Donate link:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id
 Tags: progress bar, css3, progress, shortcode
 Requires at least: 2.8
 Tested up to: 4.4
-Stable tag: 2.1.4
+Stable tag: 2.1.5
 
-a simple progress bar shortcode that can be styled with CSS
+A simple progress bar shortcode that can be styled with CSS
 
 == Description ==
 
@@ -111,22 +111,6 @@ Supported values: candystripe, animated-candystripe, red, orange, green, yellow,
 
 `[wppb progress=50 option="flat candystripe" color=gray]` Displays a gray progress bar with no inner shadow or gradient and a static candystripe
 
-= percent =
-
-**(Deprecated)**
-This parameter is deprecated. Please use the **location** parameter instead.
-
-Displays the percentage (or fraction) either inside or outside the progress bar.
-*Note:* It is *not* recommended to use `percent=after` if you are displaying a progress bar that exceeds its goal.
-
-Supported values: inside, after
-
-*Examples*
-
-`[wppb progress=50 option=red percent=after]` Displays a red progress bar with the percent displayed to the right of the progress bar
-
-`[wppb progress=50 option="red candystripe" percent=inside]` Displays a red progress bar with a static candystripe and the percent displayed inside the progress bar.
-
 = location =
 
 Displays the percentage, text or fraction either inside or outside the progress bar.
@@ -217,6 +201,11 @@ Supported values: any positive or negative decimal value from 0.0 to 1.0 or -1.0
 `[wppb progress=34 color=rgb(22,18,99) gradient=0.2]`
 
 == Changelog ==
+
+** 2.1.5 **
+
+* tested on WordPress 5.9
+* removed "deprecated" location documentation
 
 ** 2.1.4 **
 * tested on WordPress 4.4
