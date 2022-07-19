@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-	$(".wppb-progress.fixed > span").each(function() {
+	$(".wppb-progress.fixed > span, .wppb-progress-full > span").each(function() {
 		$(this)
 			.data("origWidth", $(this).width())
 			.width(0)
