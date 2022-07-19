@@ -3,8 +3,8 @@ Contributors: jazzs3quence
 Donate link: https://paypal.me/jazzsequence
 Tags: progress bar, css3, progress, shortcode
 Requires at least: 2.8
-Tested up to: 4.4
-Stable tag: 2.1.5
+Tested up to: 6.1
+Stable tag: 2.1.6
 
 A simple progress bar shortcode that can be styled with CSS
 
