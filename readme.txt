@@ -202,6 +202,9 @@ Supported values: any positive or negative decimal value from 0.0 to 1.0 or -1.0
 
 == Changelog ==
 
+** 2.1.6 **
+* Fixed a bug with the progress bar animation on full-width progress bars. (Props [@leninzapata](https://wordpress.org/support/users/leninzapata/))
+
 ** 2.1.5 **
 
 * tested on WordPress 5.9
