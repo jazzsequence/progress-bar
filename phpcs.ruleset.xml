@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <ruleset name="WP Progress Bar PHPCS">
 	<file>.</file>
+	<exclude-pattern>vendor/</exclude-pattern>
+	<exclude-pattern>tests/</exclude-pattern>
 	<rule ref="Pantheon-WP">
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
 	</rule>

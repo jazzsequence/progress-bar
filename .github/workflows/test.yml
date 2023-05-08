@@ -1,0 +1,23 @@
+name: Test
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mariadb:
+        image: mariadb:10.5
+    steps:
+      - uses: actions/checkout@v3
+      - name: Start MariaDB
+        run: |
+          sudo systemctl start mysql
+      - name: Install Extras
+        run: |
+          sudo apt-get update
+          sudo apt-get install subversion
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
+      - name: Install WordPress Test Suite
+        run: bash bin/install-wp-tests.sh wordpress_test root root 127.0.0.1 latest
+      - name: Test
+        run: composer test
