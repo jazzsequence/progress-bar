@@ -1,5 +1,13 @@
 <?php
 /**
+ * WP Progress Bar Functions
+ *
+ * Helper functions in the global scope.
+ *
+ * @package WP_Progress_Bar
+ */
+
+/**
  * Brightness
  * calculates a brighter or darker color based on the hex value given
  *
@@ -19,21 +27,21 @@ function wppb_brightness( $hex, $percent ) {
 		$hash = '#';
 	}
 	/**
-	 * HEX TO RGB
+	 * HEX TO RGB.
 	 */
 	$rgb = [ hexdec( substr( $hex, 0, 2 ) ), hexdec( substr( $hex, 2, 2 ) ), hexdec( substr( $hex, 4, 2 ) ) ];
-	// CALCULATE
+	// CALCULATE.
 	for ( $i = 0; $i < 3; $i++ ) {
-		// See if brighter or darker
+		// See if brighter or darker.
 		if ( $percent > 0 ) {
-			// Lighter
+			// Lighter.
 			$rgb[ $i ] = round( $rgb[ $i ] * $percent ) + round( 255 * ( 1 - $percent ) );
 		} else {
-			// Darker
-			$positivePercent = $percent - ( $percent * 2 );
-			$rgb[ $i ] = round( $rgb[ $i ] * $positivePercent );// + round(0 * (1-$positivePercent));
+			// Darker.
+			$positive_percent = $percent - ( $percent * 2 );
+			$rgb[ $i ] = round( $rgb[ $i ] * $positive_percent );
 		}
-		// In case rounding up causes us to go to 256
+		// In case rounding up causes us to go to 256.
 		if ( $rgb[ $i ] > 255 ) {
 			$rgb[ $i ] = 255;
 		}
@@ -43,14 +51,14 @@ function wppb_brightness( $hex, $percent ) {
 	 */
 	$hex = '';
 	for ( $i = 0; $i < 3; $i++ ) {
-		// Convert the decimal digit to hex
-		$hexDigit = dechex( $rgb[ $i ] );
-		// Add a leading zero if necessary
-		if ( strlen( $hexDigit ) == 1 ) {
-			$hexDigit = '0' . $hexDigit;
+		// Convert the decimal digit to hex.
+		$hex_digit = dechex( $rgb[ $i ] );
+		// Add a leading zero if necessary.
+		if ( strlen( $hex_digit ) == 1 ) {
+			$hex_digit = '0' . $hex_digit;
 		}
 		// Append to the hex string
-		$hex .= $hexDigit;
+		$hex .= $hex_digit;
 	}
 	return $hash . $hex;
 }
