@@ -8,29 +8,26 @@
  */
 
 /**
- * Brightness
- * calculates a brighter or darker color based on the hex value given
+ * Brightness.
+ * Calculates a brighter or darker color based on the hex value given.
  *
  * @since 1.1
  * @link http://lab.clearpixel.com.au/2008/06/darken-or-lighten-colours-dynamically-using-php/
- * @param string $hex REQUIRED the hex color value
- * @param string $percent REQUIRED how much the offset should be
- * usage: wppb_brightness('ff0000','0.2')
+ * @param string $hex REQUIRED the hex color value.
+ * @param string $percent REQUIRED how much the offset should be.
+ * Usage: wppb_brightness('ff0000','0.2').
  */
 function wppb_brightness( $hex, $percent ) {
-	/**
-	 * Work out if hash given
-	 */
+	// Work out if hash given.
 	$hash = '';
 	if ( stristr( $hex, '#' ) ) {
 		$hex = str_replace( '#', '', $hex );
 		$hash = '#';
 	}
-	/**
-	 * HEX TO RGB.
-	 */
+
+	// Hex to RGB.
 	$rgb = [ hexdec( substr( $hex, 0, 2 ) ), hexdec( substr( $hex, 2, 2 ) ), hexdec( substr( $hex, 4, 2 ) ) ];
-	// CALCULATE.
+	// Calculate.
 	for ( $i = 0; $i < 3; $i++ ) {
 		// See if brighter or darker.
 		if ( $percent > 0 ) {
@@ -46,32 +43,31 @@ function wppb_brightness( $hex, $percent ) {
 			$rgb[ $i ] = 255;
 		}
 	}
-	/**
-	 * RBG to Hex
-	 */
+
+	// RBG to Hex.
 	$hex = '';
 	for ( $i = 0; $i < 3; $i++ ) {
 		// Convert the decimal digit to hex.
 		$hex_digit = dechex( $rgb[ $i ] );
 		// Add a leading zero if necessary.
-		if ( strlen( $hex_digit ) == 1 ) {
+		if ( strlen( $hex_digit ) === 1 ) {
 			$hex_digit = '0' . $hex_digit;
 		}
-		// Append to the hex string
+		// Append to the hex string.
 		$hex .= $hex_digit;
 	}
 	return $hash . $hex;
 }
 
 /**
- * WPPB Check position
- * does a check for a slash or a dollar sign and deals with them appropriately
- * originally added by [RavanH](https://github.com/RavanH) in 1.0.4
- * abstracted to a function in 2.0
+ * WPPB Check position.
+ * Does a check for a slash or a currency symbol and deals with them appropriately.
+ * Originally added by [RavanH](https://github.com/RavanH) in 1.0.4
+ * Abstracted to a function in 2.0.
  *
- * @author Chris Reynolds
- * @author [RavanH](https://github.com/RavanH)
  * @since 2.0
+ * @param string $progress The progress to check.
+ * @return array An array containing both the progress and the width.
  */
 function wppb_check_pos( $progress ) {
 	$pos = strpos( $progress, '/' );
@@ -79,17 +75,21 @@ function wppb_check_pos( $progress ) {
 		$width = $progress . '%';
 		$progress = $progress . ' %';
 	} else {
-		$dollar = strpos( $progress, '$' );
-		if ( $dollar === false ) {
-			/**
-			 * this could be used for other currencies, potentially, though if it was, it should be changed into a case instead of an if statement
-			 */
-		} else {
-			/**
-			 * if there's a dollar sign in the progress, it will break the math
-			 * let's strip it out so we can add it back later
-			 */
-			$progress = str_replace( '$', '', $progress );
+		/**
+		 * Allow the currency symbol to be filetered.
+		 * Defaults to $.
+		 *
+		 * @since 2.2.0
+		 * @param string $currency The currency symbol.
+		 *
+		 * Usage:
+		 * add_filter( 'wppb.currency_symbol' function( $currency_symbol ) { return '€'; } );
+		 */
+		$currency = apply_filters( 'wppb.currency_symbol', '$' );
+		$has_currency_symbol = strpos( $progress, $currency );
+		if ( $has_currency_symbol !== false ) {
+			// If there's a currency symbol in the progress, it will break the math. Let's strip it out so we can add it back later.
+			$progress = str_replace( $currency, '', $progress );
 		}
 		$xofy = explode( '/', $progress );
 		if ( ! $xofy[1] ) {
@@ -97,50 +97,45 @@ function wppb_check_pos( $progress ) {
 		}
 		$percentage = $xofy[0] / $xofy[1] * 100;
 		$width = $percentage . '%';
-		if ( $dollar === false ) {
+		if ( $has_currency_symbol === false ) {
 			$progress = number_format_i18n( $xofy[0] ) . ' / ' . number_format_i18n( $xofy[1] );
 		} else {
-			/**
-			 * if there's a dollar sign in the progress, display it manually
-			 */
-			$progress = '$' . number_format_i18n( $xofy[0] ) . ' / $' . number_format_i18n( $xofy[1] );
+			// If there's a currency symbol in the progress, display it manually.
+			$progress = $currency . number_format_i18n( $xofy[0] ) . ' / ' . $currency . number_format_i18n( $xofy[1] );
 		}
 	}
-	return [ $progress, $width ]; // pass both the progress and the width back
+	return [ $progress, $width ]; // Pass both the progress and the width back.
 }
 
 /**
- * WPPB Get Progress Bar
- * gets all the parameters passed to the shortcode and constructs the progress bar
+ * WPPB Get Progress Bar.
+ * Gets all the parameters passed to the shortcode and constructs the progress bar.
  *
- * @param $location - inside, outside, null (default: null)
- * @param $fullwidth - any value (default: null)
- * @param $text - any custom text (default: null)
- * @param $progress - the progress to display (required)
- * @param $option - any applicable options (default: null)
- * @param $width - the width of the progress bar, based on $progress (required)
- * @param $color - custom color for the progress bar (default: null)
- * @param $gradient - custom gradient value, in decimals (default: null)
- * @param $gradient_end gradient end color, based on the endcolor parameter or $gradient (default: null)
- * @author Chris Reynolds
+ * @param mixed $location - Inside, Outside, null (default: null).
+ * @param mixed $text - Any custom text (default: null).
+ * @param string $progress - The progress to display (required).
+ * @param mixed $option - Any applicable options (default: null).
+ * @param string $width - The width of the progress bar, based on $progress (required).
+ * @param mixed $fullwidth - Any value (default: null).
+ * @param mixed $color - Custom color for the progress bar (default: null).
+ * @param mixed $gradient - Custom gradient value, in decimals (default: null).
+ * @param mixed $gradient_end Gradient end color, based on the endcolor parameter or $gradient (default: null).
  * @since 2.0
  */
 function wppb_get_progress_bar( $location = false, $text = false, $progress, $option = false, $width, $fullwidth = false, $color = false, $gradient = false, $gradient_end = false ) {
-	/**
-	 * here's the html output of the progress bar
-	 */
-	$wppb_output = "<div class=\"wppb-wrapper $location"; // adding $location to the wrapper class, so I can set a width for the wrapper based on whether it's using div.wppb-wrapper.after or div.wppb-wrapper.inside or just div.wppb-wrapper
+	// Here's the HTML output of the progress bar.
+	$wppb_output = "<div class=\"wppb-wrapper $location"; // Adding $location to the wrapper class, so I can set a width for the wrapper based on whether it's using div.wppb-wrapper.after or div.wppb-wrapper.inside or just div.wppb-wrapper.
 	if ( $fullwidth ) {
 		$wppb_output .= ' full';
 	}
 	$wppb_output .= '">';
-	if ( $location && $text ) { // if $location is not empty and there's custom text, add this
+	if ( $location && $text ) { // If $location is not empty and there's custom text, add this.
 		$wppb_output .= "<div class=\"$location\">" . wp_kses( $text, [] ) . '</div>';
-	} elseif ( $location && ! $text ) { // if the $location is set but there's no custom text
+	} elseif ( $location && ! $text ) { // If the $location is set but there's no custom text.
 		$wppb_output .= "<div class=\"$location\">";
 		$wppb_output .= $progress;
 		$wppb_output .= '</div>';
-	} elseif ( ! $location && $text ) { // if the location is not set, but there is custom text
+	} elseif ( ! $location && $text ) { // If the location is not set, but there is custom text.
 		$wppb_output .= '<div class="inside">' . wp_kses( $text, [] ) . '</div>';
 	}
 	$wppb_output .= '<div class="wppb-progress';
@@ -149,12 +144,12 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress, $op
 	} else {
 		$wppb_output .= ' fixed';
 	}
-	$wppb_output    .= '">';
-	$wppb_output    .= '<span';
+	$wppb_output .= '">';
+	$wppb_output .= '<span';
 	if ( $option ) {
 		$wppb_output .= " class=\"{$option}\"";
 	}
-	if ( $color ) { // if color is set
+	if ( $color ) { // If color is set.
 		$wppb_output .= " style=\"width: $width; background: {$color};";
 		if ( $gradient_end ) {
 			$wppb_output .= "background: -moz-linear-gradient(top, {$color} 0%, $gradient_end 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,{$color}), color-stop(100%,$gradient_end)); background: -webkit-linear-gradient(top, {$color} 0%,$gradient_end 100%); background: -o-linear-gradient(top, {$color} 0%,$gradient_end 100%); background: -ms-linear-gradient(top, {$gradient} 0%,$gradient_end 100%); background: linear-gradient(top, {$color} 0%,$gradient_end 100%); \"";
@@ -167,11 +162,9 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress, $op
 	} else {
 		$wppb_output .= '"';
 	}
-	$wppb_output    .= '><span></span></span>';
-	$wppb_output    .= '</div>';
-	$wppb_output    .= '</div>';
-	/**
-	 * now return the progress bar
-	 */
+	$wppb_output .= '><span></span></span>';
+	$wppb_output .= '</div>';
+	$wppb_output .= '</div>';
+	// Now return the progress bar.
 	return $wppb_output;
 }
