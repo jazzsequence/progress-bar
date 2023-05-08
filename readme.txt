@@ -20,7 +20,7 @@ where "50" in the example above is a progress bar that is 50% complete.  Simple
 
 For more examples and full descriptions of all the available options, click on the [options tab](http://wordpress.org/extend/plugins/progress-bar/other_notes/).
 
-For demos of each of the options, go here: https://jazzsequence.com/progress-bar/
+For demos of each of the options, go here: https://progressbar.jazzsequence.com
 
 == Installation ==
 
