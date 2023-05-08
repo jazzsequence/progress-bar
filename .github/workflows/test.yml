@@ -6,7 +6,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
-        run: composer test:install
+        run: |
+          composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
+          composer test:install
       - name: Test
         run: composer test
