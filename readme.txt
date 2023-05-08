@@ -3,8 +3,8 @@ Contributors: jazzs3quence
 Donate link: https://paypal.me/jazzsequence
 Tags: progress bar, css3, progress, shortcode
 Requires at least: 2.8
-Tested up to: 6.1
-Stable tag: 2.1.6
+Tested up to: 6.2
+Stable tag: 2.2.0
 
 A simple progress bar shortcode that can be styled with CSS
 
@@ -28,6 +28,31 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 
 == Frequently Asked Questions ==
+
+**How do I change the currency?**
+
+WP Progress bar allows currencies in progress bars. By default, the supported currency symbol is $. However, since version 2.2, you can modify this in your environment by using the `wppb.currency_symbol` filter, e.g.:
+
+```
+add_filter( 'wppb.currency_symbol', 'my_custom_currency_symbol' );
+function my_custom_currency_symbol( $symbol ) {
+	return '£';
+}
+```
+
+This code would allow-list the £ symbol for use in progress bars. You can also add support for multiple currency symbols in a similar way:
+
+```
+add_filter( 'wppb.currency_symbol', 'my_custom_currency_symbol' );
+function my_custom_currency_symbol( $symbol ) {
+	$allowed_symbols = [ '$', '£' ];
+	if ( in_array( $symbol, $allowed_symbols ) ) {
+		return $symbol;
+	}
+
+	return '$';
+}
+```
 
 **How do I change the colors?**
 
@@ -200,7 +225,20 @@ Supported values: any positive or negative decimal value from 0.0 to 1.0 or -1.0
 
 `[wppb progress=34 color=rgb(22,18,99) gradient=0.2]`
 
+== Upgrade Notice ==
+** 2.2.0 **
+
+* 2.2.0 resolves possible XSS issues in the old plugin. It is recommended that you upgrade to the latest version to avoid cross-site scripting attacks.
+* 2.2.0 also adds the ability to use custom currencies in your progress bars rather than using the `test` option. See the [FAQ](http://wordpress.org/plugins/progress-bar/faq/) for more information.
+
 == Changelog ==
+
+** 2.2.0 **
+* Adds LICENSE file [[#4](https://github.com/jazzsequence/progress-bar/pull/4)]
+* Adds composer for package management [[#5](https://github.com/jazzsequence/progress-bar/pull/5)]
+* Adds CODEOWNERS file [[#6](https://github.com/jazzsequence/progress-bar/pull/6)]
+* Added Composer scripts for linting & fixed linting issues. Also, resolved possible XSS issues. [[#7](https://github.com/jazzsequence/progress-bar/pull/7)]
+* Added unit tests [[#8](https://github.com/jazzsequence/progress-bar/pull/8)]
 
 ** 2.1.6 **
 * Fixed a bug with the progress bar animation on full-width progress bars. (Props [@leninzapata](https://wordpress.org/support/users/leninzapata/))
