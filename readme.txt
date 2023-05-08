@@ -3,8 +3,8 @@ Contributors: jazzs3quence
 Donate link: https://paypal.me/jazzsequence
 Tags: progress bar, css3, progress, shortcode
 Requires at least: 2.8
-Tested up to: 6.1
-Stable tag: 2.1.6
+Tested up to: 6.2
+Stable tag: 2.2.0
 
 A simple progress bar shortcode that can be styled with CSS
 
@@ -28,6 +28,31 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 
 == Frequently Asked Questions ==
+
+**How do I change the currency?**
+
+WP Progress bar allows currencies in progress bars. By default, the supported currency symbol is $. However, since version 2.2, you can modify this in your environment by using the `wppb.currency_symbol` filter, e.g.:
+
+```
+add_filter( 'wppb.currency_symbol', 'my_custom_currency_symbol' );
+function my_custom_currency_symbol( $symbol ) {
+	return '£';
+}
+```
+
+This code would allow-list the £ symbol for use in progress bars. You can also add support for multiple currency symbols in a similar way:
+
+```
+add_filter( 'wppb.currency_symbol', 'my_custom_currency_symbol' );
+function my_custom_currency_symbol( $symbol ) {
+	$allowed_symbols = [ '$', '£' ];
+	if ( in_array( $symbol, $allowed_symbols ) ) {
+		return $symbol;
+	}
+
+	return '$';
+}
+```
 
 **How do I change the colors?**
 
