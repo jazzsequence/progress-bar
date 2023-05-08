@@ -2,9 +2,6 @@
     "name": "jazzsequence/progress-bar",
     "description": "a simple progress bar shortcode that can be styled with CSS",
     "type": "wordpress-plugin",
-    "require-dev": {
-        "pantheon-systems/pantheon-wp-coding-standards": "^1.0"
-    },
     "license": "GPLv2",
     "authors": [
         {
@@ -13,9 +10,22 @@
         }
     ],
     "require": {},
+    "require-dev": {
+        "pantheon-systems/pantheon-wp-coding-standards": "^1.0"
+    },
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
-        }
+        },
+        "sort-packages": true
+    },
+    "scripts": {
+        "lint:php": "find ./wp-progresss-bar.php ./wppb-widget.php ./functions.php -exec php -l {} \\;",
+        "lint:phpcs": "vendor/bin/phpcs -s --ignore=vendor/* --standard=Pantheon-WP .",
+        "lint:phpcbf": "vendor/bin/phpcbf -s --ignore=vendor/* --standard=Pantheon-WP .",
+        "lint": [
+            "@lint:php",
+            "@lint:phpcs"
+        ]
     }
 }
