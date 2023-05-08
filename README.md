@@ -25,7 +25,7 @@ For demos of each of the options, go here: https://progressbar.jazzsequence.com
 
 The following is a list of all the available shortcode options. These can be used in any combination. The only **required** parameter is  **progress**. All parameters are case-sensitive (e.g. "progress" will work but "Progress" will not).
 
-### `progress` (required) =
+### `progress` (required)
 
 This determines how full the progress bar will be. Progress can be in 2 forms, either a number (0-100), in which case it will be interpreted as a percentage, or as a fraction (e.g. 25/100). Since 1.1, you can also use dollar signs (e.g. $63/$180), for example to create a fundraising progress bar. If using dollar signs, you only *need* to add a dollar sign to one or the other of the two values (e.g. 63/$180 or $63/180) -- the plugin will output either option the same ($63/$180). Your progress can go over, too (e.g. 150/100 or 123%), but your mileage may vary for the display. It's not recommended to use this with the **fullwidth** option, for example, because your progress will spill outside of your main body container.
 
