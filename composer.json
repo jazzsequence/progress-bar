@@ -21,8 +21,8 @@
     },
     "scripts": {
         "lint:php": "find ./wp-progress-bar.php ./wppb-widget.php ./functions.php -exec php -l {} \\;",
-        "lint:phpcs": "vendor/bin/phpcs -s --ignore=vendor/* --standard=Pantheon-WP .",
-        "lint:phpcbf": "vendor/bin/phpcbf -s --ignore=vendor/* --standard=Pantheon-WP .",
+        "lint:phpcs": "vendor/bin/phpcs -s --ignore=vendor/* --standard=phpcs.ruleset.xml .",
+        "lint:phpcbf": "vendor/bin/phpcbf -s --ignore=vendor/* --standard=phpcs.ruleset.xml .",
         "lint": [
             "@lint:php",
             "@lint:phpcs"
