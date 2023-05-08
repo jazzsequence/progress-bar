@@ -9,14 +9,6 @@ define( 'WP_TESTS_PHPUNIT_POLYFILLS_PATH', __DIR__ . '/../../vendor/yoast/phpuni
 
 require_once $_tests_dir . '/includes/functions.php';
 
-if ( getenv( 'WP_CORE_DIR' ) ) {
-	$_core_dir = getenv( 'WP_CORE_DIR' );
-} elseif ( getenv( 'WP_DEVELOP_DIR' ) ) {
-	$_core_dir = getenv( 'WP_DEVELOP_DIR' ) . '/src/';
-} else {
-	$_core_dir = '/tmp/wordpress';
-}
-
 function _manually_load_plugin() {
 	require dirname( __FILE__, 3 ) . '/wp-progress-bar.php';
 }
