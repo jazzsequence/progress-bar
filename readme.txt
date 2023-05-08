@@ -225,7 +225,20 @@ Supported values: any positive or negative decimal value from 0.0 to 1.0 or -1.0
 
 `[wppb progress=34 color=rgb(22,18,99) gradient=0.2]`
 
+== Upgrade Notice ==
+** 2.2.0 **
+
+* 2.2.0 resolves possible XSS issues in the old plugin. It is recommended that you upgrade to the latest version to avoid cross-site scripting attacks.
+* 2.2.0 also adds the ability to use custom currencies in your progress bars rather than using the `test` option. See the [FAQ](http://wordpress.org/plugins/progress-bar/faq/) for more information.
+
 == Changelog ==
+
+** 2.2.0 **
+* Adds LICENSE file [[#4](https://github.com/jazzsequence/progress-bar/pull/4)]
+* Adds composer for package management [[#5](https://github.com/jazzsequence/progress-bar/pull/5)]
+* Adds CODEOWNERS file [[#6](https://github.com/jazzsequence/progress-bar/pull/6)]
+* Added Composer scripts for linting & fixed linting issues. Also, resolved possible XSS issues. [[#7](https://github.com/jazzsequence/progress-bar/pull/7)]
+* Added unit tests [[#8](https://github.com/jazzsequence/progress-bar/pull/8)]
 
 ** 2.1.6 **
 * Fixed a bug with the progress bar animation on full-width progress bars. (Props [@leninzapata](https://wordpress.org/support/users/leninzapata/))
