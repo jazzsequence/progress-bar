@@ -1,0 +1,21 @@
+{
+    "name": "jazzsequence/progress-bar",
+    "description": "a simple progress bar shortcode that can be styled with CSS",
+    "type": "wordpress-plugin",
+    "require-dev": {
+        "pantheon-systems/pantheon-wp-coding-standards": "^1.0"
+    },
+    "license": "GPLv2",
+    "authors": [
+        {
+            "name": "Chris Reynolds",
+            "email": "chris@jazzsequence.com"
+        }
+    ],
+    "require": {},
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}
