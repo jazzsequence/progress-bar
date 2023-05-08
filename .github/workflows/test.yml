@@ -3,8 +3,18 @@ on: [push, pull_request]
 jobs:
   lint:
     runs-on: ubuntu-latest
+    services:
+      mariadb:
+        image: mariadb:10.5
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - name: Start MariaDB
+        run: |
+          sudo systemctl start mysql
+      - name: Install Extras
+        run: |
+          sudo apt-get update
+          sudo apt-get install subversion
       - name: Install dependencies
         run: |
           composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
