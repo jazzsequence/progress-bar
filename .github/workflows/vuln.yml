@@ -36,13 +36,8 @@ jobs:
         run: |
           echo "Setting up plugins & vulnerability scanner..."
           cd /tmp/wordpress
-          echo "GITHUB_WORKSPACE"
-          ls -la ${GITHUB_WORKSPACE}
           mkdir wp-content/plugins/progress-bar
           cp -r ${GITHUB_WORKSPACE}/* wp-content/plugins/progress-bar
-          echo "Plugins directory"
-          ls -la wp-content/plugins
-          ls -la wp-content/plugins/progress-bar
           wp plugin activate progress-bar
           wp plugin delete hello
           wp plugin delete akismet
@@ -54,6 +49,7 @@ jobs:
       - name: Scan for vulnerabilities
         run: |
           cd /tmp/wordpress
+          wp vuln plugin-status
           if [[ $(wp vuln plugin-status) =~ "No vulnerabilities reported for this version of progress-bar" ]]; then
             echo "✨ No vulnerabilities found"
             exit 0
