@@ -20,7 +20,7 @@ jobs:
       - name: Install WordPress Test Suite
         run: |
           echo "Installing WP Test Suite so we can use it for vulnerability scanning..."
-          bash bin/install-wp-tests.sh wordpress_test root root 127.0.0.1 latest
+          bash bin/install-wp-tests.sh wppb_tests root root 127.0.0.1 latest
       - name: Install WP-CLI
         run: |
           echo "Installing WP-CLI..."
