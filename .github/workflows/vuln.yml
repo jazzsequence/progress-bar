@@ -36,7 +36,12 @@ jobs:
         run: |
           echo "Setting up plugins & vulnerability scanner..."
           cd /tmp/wordpress
+          echo "GITHUB_WORKSPACE"
+          ls -la ${GITHUB_WORKSPACE}
           rsync ${GITHUB_WORKSPACE} wp-content/plugins/progress-bar --exclude vendor --exclude .git --exclude .github --exclude .gitignore --exclude .gitattributes --exclude composer.json --exclude composer.lock --exclude phpunit.xml.dist --exclude .phpcs.xml.dist --exclude .phpcs.xml --exclude .phpunit.result.cache --exclude .phpunit.cache
+          echo "Plugins directory"
+          ls -la wp-content/plugins
+          ls -la wp-content/plugins/progress-bar
           wp plugin activate progress-bar
           wp plugin delete hello
           wp plugin delete akismet
