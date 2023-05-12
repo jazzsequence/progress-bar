@@ -15,8 +15,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install subversion
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
       - name: Install WordPress Test Suite
         run: |
           echo "Installing WP Test Suite so we can use it for vulnerability scanning..."
