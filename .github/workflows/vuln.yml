@@ -32,9 +32,7 @@ jobs:
         run: |
           echo "Setting up WordPress..."
           cd /tmp/wordpress
-          echo "debugging..."
-          ls -la
-          wp config create --dbname=wppb_tests --dbuser=root
+          wp config create --dbname=wppb_tests --dbuser=root --dbpass=root --dbhost=127.0.0.1
           wp core install --url=wordpressprogressbar.test --title=WordPress --admin_user=progressbar --admin_password=password --admin_email=noreply@dev.null
       - name: Set up plugins & vulnerability scanner
         run: |
