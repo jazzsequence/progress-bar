@@ -131,16 +131,15 @@ function wppb_check_pos( $progress ) {
  * @since 2.0
  */
 function wppb_get_progress_bar( $location = false, $text = false, $progress = '', $option = false, $width = '', $fullwidth = false, $color = false, $gradient = false, $gradient_end = false ) {
-	/*
-	 * If $progress or $width are empty, throw an error. This is because this
-	 * function was written poorly the first time around and had required
-	 * parameters after optional ones. Changing now would break old
-	 * implementations, so trigger a __doing_it_wrong error if width or
-	 * progress are empty.
-	 */
-	if ( empty( $progress ) || empty( $width ) ) {
-		__doing_it_wrong( 'wppb_get_progress_bar', esc_html__( 'You must pass a progress and width value to wppb_get_progress_bar.', 'wp-progress-bar' ), '2.2.0' );
-	}
+	// Sanitize user input.
+	$location = sanitize_html_class( $location );
+	$text = sanitize_text_field( $text );
+	$width = floatval( $width );
+	$fullwidth = sanitize_html_class( $fullwidth );
+	$color = sanitize_text_field( $color );
+	$gradient = sanitize_text_field( $gradient );
+	$gradient_end = sanitize_text_field( $gradient_end );
+	$option = sanitize_text_field( $option );
 	// Here's the HTML output of the progress bar.
 	$wppb_output = "<div class=\"wppb-wrapper $location"; // Adding $location to the wrapper class, so I can set a width for the wrapper based on whether it's using div.wppb-wrapper.after or div.wppb-wrapper.inside or just div.wppb-wrapper.
 	if ( $fullwidth ) {
