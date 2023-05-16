@@ -78,6 +78,14 @@ class WppbTest extends TestCase {
 		// after
 		$output = do_shortcode('[wppb progress=50 text="Hello World" location=after]');
 		$this->assertEquals('<div class="wppb-wrapper after"><div class="after">Hello World</div><div class="wppb-progress fixed"><span style="width: 50%;"><span></span></span></div></div>', $output);
+
+		// Shortcode with XSS vulnerability exposed.
+		$output = do_shortcode('[wppb progress=50 location=inside text="<script>alert("XSS");</script>"]');
+		$this->assertEquals('<div class="wppb-wrapper inside"><div class="inside">50 %</div><div class="wppb-progress fixed"><span style="width: 50%;"><span></span></span></div></div>', $output);
+
+		// Shortcode with XSS vulnerability exposed after the progress bar.
+		$output = do_shortcode('[wppb progress=50 location=after text="<script>alert("XSS");</script>"]');
+		$this->assertEquals('<div class="wppb-wrapper after"><div class="after">50 %</div><div class="wppb-progress fixed"><span style="width: 50%;"><span></span></span></div></div>', $output);
 	}
 
 	public function test_fullwidth() {

@@ -30,6 +30,11 @@
         ],
         "test:install": "bash bin/install-wp-tests.sh wppb_tests root '' localhost latest",
         "test:install:skipdb": "bash bin/install-wp-tests.sh wppb_tests root '' localhost latest true",
+        "test:reinstall": [
+            "rm -rf /tmp/wordpress-tests-lib",
+            "rm -rf /tmp/wordpress",
+            "@test:install:skipdb"
+        ],
         "test": [
             "vendor/bin/phpunit -c phpunit.xml"
         ]
