@@ -186,12 +186,12 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 		$wppb_output .= " class=\"{$option}\"";
 	}
 	if ( $color ) { // If color is set.
-		$wppb_output .= " style=\"width: $width; background: {$color};";
+		$wppb_output .= " style=\"width: $width%; background: {$color};";
 		if ( $gradient_end ) {
 			$wppb_output .= "background: -moz-linear-gradient(top, {$color} 0%, $gradient_end 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,{$color}), color-stop(100%,$gradient_end)); background: -webkit-linear-gradient(top, {$color} 0%,$gradient_end 100%); background: -o-linear-gradient(top, {$color} 0%,$gradient_end 100%); background: -ms-linear-gradient(top, {$gradient} 0%,$gradient_end 100%); background: linear-gradient(top, {$color} 0%,$gradient_end 100%); \"";
 		}
 	} else {
-		$wppb_output .= " style=\"width: $width;";
+		$wppb_output .= " style=\"width: $width%;";
 	}
 	if ( $gradient && $color ) {
 		$wppb_output .= "background: -moz-linear-gradient(top, {$color} 0%, $gradient_end 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,{$color}), color-stop(100%,$gradient_end)); background: -webkit-linear-gradient(top, {$color} 0%,$gradient_end 100%); background: -o-linear-gradient(top, {$color} 0%,$gradient_end 100%); background: -ms-linear-gradient(top, {$gradient} 0%,$gradient_end 100%); background: linear-gradient(top, {$color} 0%,$gradient_end 100%); \"";
