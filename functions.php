@@ -20,13 +20,21 @@
 function wppb_brightness( $hex, $percent ) {
 	// Work out if hash given.
 	$hash = '';
+	$rgb = $hex;
 	if ( stristr( $hex, '#' ) ) {
 		$hex = str_replace( '#', '', $hex );
 		$hash = '#';
 	}
 
-	// Hex to RGB.
-	$rgb = [ hexdec( substr( $hex, 0, 2 ) ), hexdec( substr( $hex, 2, 2 ) ), hexdec( substr( $hex, 4, 2 ) ) ];
+	// Check if we actually have a hex value or if it's an rgb value.
+	if ( false === strpos( $hex, 'rgb(' ) ) {
+		// Hex to RGB.
+		$rgb = [ hexdec( substr( $hex, 0, 2 ) ), hexdec( substr( $hex, 2, 2 ) ), hexdec( substr( $hex, 4, 2 ) ) ];
+	} else {
+		// Convert $rgb to an array of values.
+		$rgb = explode( ',', str_replace( [ 'rgb(', ')' ], '', $hex ) );
+	}
+
 	// Calculate.
 	for ( $i = 0; $i < 3; $i++ ) {
 		// See if brighter or darker.
