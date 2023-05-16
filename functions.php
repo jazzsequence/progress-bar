@@ -129,6 +129,7 @@ function wppb_check_pos( $progress ) {
  * @param mixed $gradient - Custom gradient value, in decimals (default: null).
  * @param mixed $gradient_end Gradient end color, based on the endcolor parameter or $gradient (default: null).
  * @since 2.0
+ * @throws Exception If $progress or $width are empty.
  */
 function wppb_get_progress_bar( $location = false, $text = false, $progress = '', $option = false, $width = '', $fullwidth = false, $color = false, $gradient = false, $gradient_end = false ) {
 	// Sanitize user input.
@@ -144,6 +145,7 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 	// Throw an exception if $progress or $width are empty.
 	try {
 		$message = esc_html__( 'You must pass a progress and width value to wppb_get_progress_bar.', 'wp-progress-bar' );
+
 		/*
 		 * If $progress or $width are empty, throw an exception. This is
 		 * because this function was written poorly the first time around and
