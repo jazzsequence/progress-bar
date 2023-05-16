@@ -129,18 +129,38 @@ function wppb_check_pos( $progress ) {
  * @param mixed $gradient - Custom gradient value, in decimals (default: null).
  * @param mixed $gradient_end Gradient end color, based on the endcolor parameter or $gradient (default: null).
  * @since 2.0
+ * @throws Exception If $progress or $width are empty.
  */
 function wppb_get_progress_bar( $location = false, $text = false, $progress = '', $option = false, $width = '', $fullwidth = false, $color = false, $gradient = false, $gradient_end = false ) {
-	/*
-	 * If $progress or $width are empty, throw an error. This is because this
-	 * function was written poorly the first time around and had required
-	 * parameters after optional ones. Changing now would break old
-	 * implementations, so trigger a __doing_it_wrong error if width or
-	 * progress are empty.
-	 */
-	if ( empty( $progress ) || empty( $width ) ) {
-		__doing_it_wrong( 'wppb_get_progress_bar', esc_html__( 'You must pass a progress and width value to wppb_get_progress_bar.', 'wp-progress-bar' ), '2.2.0' );
+	// Sanitize user input.
+	$location = sanitize_html_class( $location );
+	$text = sanitize_text_field( $text );
+	$width = floatval( $width );
+	$fullwidth = sanitize_html_class( $fullwidth );
+	$color = sanitize_text_field( $color );
+	$gradient = sanitize_text_field( $gradient );
+	$gradient_end = sanitize_text_field( $gradient_end );
+	$option = sanitize_text_field( $option );
+
+	// Throw an exception if $progress or $width are empty.
+	try {
+		$message = esc_html__( 'You must pass a progress and width value to wppb_get_progress_bar.', 'wp-progress-bar' );
+
+		/*
+		 * If $progress or $width are empty, throw an exception. This is
+		 * because this function was written poorly the first time around and
+		 * had required parameters after optional ones. Changing now would
+		 * break old implementations, so trigger an exception and
+		 * _doing_it_wrong error if width or progress are empty.
+		 */
+		if ( empty( $progress ) || empty( $width ) ) {
+			throw new Exception( $message );
+		}
+	} catch ( Exception $e ) {
+		// Display the message if an exception is thrown.
+		return new WP_Error( 'progress_bar.exception', $e->getMessage() );
 	}
+
 	// Here's the HTML output of the progress bar.
 	$wppb_output = "<div class=\"wppb-wrapper $location"; // Adding $location to the wrapper class, so I can set a width for the wrapper based on whether it's using div.wppb-wrapper.after or div.wppb-wrapper.inside or just div.wppb-wrapper.
 	if ( $fullwidth ) {
@@ -148,13 +168,13 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 	}
 	$wppb_output .= '">';
 	if ( $location && $text ) { // If $location is not empty and there's custom text, add this.
-		$wppb_output .= "<div class=\"$location\">" . wp_kses( $text, [] ) . '</div>';
+		$wppb_output .= "<div class=\"$location\">$text</div>";
 	} elseif ( $location && ! $text ) { // If the $location is set but there's no custom text.
 		$wppb_output .= "<div class=\"$location\">";
 		$wppb_output .= $progress;
 		$wppb_output .= '</div>';
 	} elseif ( ! $location && $text ) { // If the location is not set, but there is custom text.
-		$wppb_output .= '<div class="inside">' . wp_kses( $text, [] ) . '</div>';
+		$wppb_output .= "<div class=\"inside\">$text</div>";
 	}
 	$wppb_output .= '<div class="wppb-progress';
 	if ( $fullwidth ) {
@@ -168,12 +188,12 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 		$wppb_output .= " class=\"{$option}\"";
 	}
 	if ( $color ) { // If color is set.
-		$wppb_output .= " style=\"width: $width; background: {$color};";
+		$wppb_output .= " style=\"width: $width%; background: {$color};";
 		if ( $gradient_end ) {
 			$wppb_output .= "background: -moz-linear-gradient(top, {$color} 0%, $gradient_end 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,{$color}), color-stop(100%,$gradient_end)); background: -webkit-linear-gradient(top, {$color} 0%,$gradient_end 100%); background: -o-linear-gradient(top, {$color} 0%,$gradient_end 100%); background: -ms-linear-gradient(top, {$gradient} 0%,$gradient_end 100%); background: linear-gradient(top, {$color} 0%,$gradient_end 100%); \"";
 		}
 	} else {
-		$wppb_output .= " style=\"width: $width;";
+		$wppb_output .= " style=\"width: $width%;";
 	}
 	if ( $gradient && $color ) {
 		$wppb_output .= "background: -moz-linear-gradient(top, {$color} 0%, $gradient_end 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,{$color}), color-stop(100%,$gradient_end)); background: -webkit-linear-gradient(top, {$color} 0%,$gradient_end 100%); background: -o-linear-gradient(top, {$color} 0%,$gradient_end 100%); background: -ms-linear-gradient(top, {$gradient} 0%,$gradient_end 100%); background: linear-gradient(top, {$color} 0%,$gradient_end 100%); \"";
