@@ -166,13 +166,13 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 	}
 	$wppb_output .= '">';
 	if ( $location && $text ) { // If $location is not empty and there's custom text, add this.
-		$wppb_output .= "<div class=\"$location\">" . wp_kses( $text, [] ) . '</div>';
+		$wppb_output .= "<div class=\"$location\">$text</div>";
 	} elseif ( $location && ! $text ) { // If the $location is set but there's no custom text.
 		$wppb_output .= "<div class=\"$location\">";
 		$wppb_output .= $progress;
 		$wppb_output .= '</div>';
 	} elseif ( ! $location && $text ) { // If the location is not set, but there is custom text.
-		$wppb_output .= '<div class="inside">' . wp_kses( $text, [] ) . '</div>';
+		$wppb_output .= "<div class=\"inside\">$text</div>";
 	}
 	$wppb_output .= '<div class="wppb-progress';
 	if ( $fullwidth ) {
