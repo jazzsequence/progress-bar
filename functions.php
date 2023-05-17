@@ -144,16 +144,15 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 
 	// Throw an exception if $progress or $width are empty.
 	try {
-		$message = esc_html__( 'You must pass a progress and width value to wppb_get_progress_bar.', 'wp-progress-bar' );
+		$message = esc_html__( 'You must pass at least a progress value to wppb_get_progress_bar.', 'wp-progress-bar' );
 
 		/*
-		 * If $progress or $width are empty, throw an exception. This is
-		 * because this function was written poorly the first time around and
-		 * had required parameters after optional ones. Changing now would
-		 * break old implementations, so trigger an exception and
-		 * _doing_it_wrong error if width or progress are empty.
+		 * If $progress is empty, throw an exception. This is because this
+		 * function was written poorly the first time around and had required
+		 * parameters after optional ones. Changing now would break old
+		 * implementations.
 		 */
-		if ( empty( $progress ) || empty( $width ) ) {
+		if ( $progress === '' ) {
 			throw new Exception( $message );
 		}
 	} catch ( Exception $e ) {

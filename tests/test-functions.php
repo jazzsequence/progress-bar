@@ -56,6 +56,26 @@ class WppbTestFunctions extends TestCase {
 		$output = wppb_get_progress_bar( false, false, '50', false, '50%', false, '#ff0000', false, '#00ff00' );
 		$this->assertEquals( '<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 50%; background: #ff0000;background: -moz-linear-gradient(top, #ff0000 0%, #00ff00 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff0000), color-stop(100%,#00ff00)); background: -webkit-linear-gradient(top, #ff0000 0%,#00ff00 100%); background: -o-linear-gradient(top, #ff0000 0%,#00ff00 100%); background: -ms-linear-gradient(top,  0%,#00ff00 100%); background: linear-gradient(top, #ff0000 0%,#00ff00 100%); ""><span></span></span></div></div>', $output );
 
+		// [wppb progress=0]
+		$output = wppb_get_progress_bar( false, false, '0' );
+		$this->assertEquals( '<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 0%;"><span></span></span></div></div>', $output );
+
+		// Test the progress bar with a null value for progress.
+		$output = wppb_get_progress_bar( false, false, null );
+		$this->assertEquals( '<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 0%;"><span></span></span></div></div>', $output );
+
+		// Test the progress bar with an invalid value for the progress.
+		$output = wppb_get_progress_bar( false, false, 'invalid' );
+		$this->assertEquals( '<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 0%;"><span></span></span></div></div>', $output );
+
+		// Test the progress bar with a value for progress but 0% width.
+		$output = wppb_get_progress_bar( false, false, '50', false, '0%' );
+		$this->assertEquals( '<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 0%;"><span></span></span></div></div>', $output );
+
+		// Test the progress bar returning an exception when the progress and width values are invalid.
+		$output = wppb_get_progress_bar();
+		$this->assertTrue( $output instanceof WP_Error );
+
 		// Test the progress bar with an XSS vulnerability exposed.
 		$output = wppb_get_progress_bar( false, '<script>alert("XSS");</script>', '50', false, '50%', false, false, false, false );
 		$this->assertEquals( '<div class="wppb-wrapper "><div class="inside">&lt;script&gt;alert(&quot;XSS&quot;);&lt;/script&gt;</div><div class="wppb-progress fixed"><span style="width: 50%;"><span></span></span></div></div>', $output );
@@ -65,7 +85,8 @@ class WppbTestFunctions extends TestCase {
 		$this->assertEquals( '<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 50%;"><span></span></span></div></div>', $output );
 
 		// Test the progress bar with XSS vulnerabilities exposed in all possible parameters.
-		$this->assertTrue( wppb_get_progress_bar( '<script>alert("XSS");</script>', '<script>alert("XSS");</script>', '<script>alert("XSS");</script>', '<script>alert("XSS");</script>', '<script>alert("XSS");</script>', '<script>alert("XSS");</script>', '<script>alert("XSS");</script>', '<script>alert("XSS");</script>', '<script>alert("XSS");</script>' ) instanceof WP_Error );
+		$output = wppb_get_progress_bar( '<script>alert("XSS");</script>', '<script>alert("XSS");</script>', '<script>alert("XSS");</script>', '<script>alert("XSS");</script>', '<script>alert("XSS");</script>', '<script>alert("XSS");</script>', '<script>alert("XSS");</script>', '<script>alert("XSS");</script>', '<script>alert("XSS");</script>' );
+		$this->assertEquals( $output, '<div class="wppb-wrapper ltscriptgtalertquotXSSquotltscriptgt full"><div class="ltscriptgtalertquotXSSquotltscriptgt">&lt;script&gt;alert(&quot;XSS&quot;);&lt;/script&gt;</div><div class="wppb-progress full"><span class="scriptalertXSSscript" style="width: 0%;"><span></span></span></div></div>' );
 
 		// Test XSS on everything except progress and width.
 		$output = wppb_get_progress_bar(
@@ -80,6 +101,19 @@ class WppbTestFunctions extends TestCase {
 			'<script>alert("XSS");</script>' // Endcolor
 		);
 		$this->assertEquals( '<div class="wppb-wrapper ltscriptgtalertquotXSSquotltscriptgt full"><div class="ltscriptgtalertquotXSSquotltscriptgt">&lt;script&gt;alert(&quot;XSS&quot;);&lt;/script&gt;</div><div class="wppb-progress full"><span class="scriptalertXSSscript" style="width: 50%;"><span></span></span></div></div>', $output );
+		// Test XSS on everything with progress and width equalling a null value.
+		$output = wppb_get_progress_bar(
+			'<script>alert("XSS");</script>', // Location
+			'<script>alert("XSS");</script>', // Text
+			null, // Progress
+			'<script>alert("XSS");</script>', // Option
+			null, // Width
+			'<script>alert("XSS");</script>', // Fullwidth
+			'<script>alert("XSS");</script>', // Color
+			'<script>alert("XSS");</script>', // Gradient
+			'<script>alert("XSS");</script>' // Endcolor
+		);
+		$this->assertEquals( '<div class="wppb-wrapper ltscriptgtalertquotXSSquotltscriptgt full"><div class="ltscriptgtalertquotXSSquotltscriptgt">&lt;script&gt;alert(&quot;XSS&quot;);&lt;/script&gt;</div><div class="wppb-progress full"><span class="scriptalertXSSscript" style="width: 0%;"><span></span></span></div></div>', $output );
 	}
 
 	// wppb_sanitize_color
