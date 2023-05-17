@@ -60,10 +60,16 @@ class WppbTestFunctions extends TestCase {
 		$output = wppb_get_progress_bar( false, false, '0' );
 		$this->assertEquals( '<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 0%;"><span></span></span></div></div>', $output );
 
+		// Test the progress bar with a null value for progress.
 		$output = wppb_get_progress_bar( false, false, null );
 		$this->assertEquals( '<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 0%;"><span></span></span></div></div>', $output );
 
+		// Test the progress bar with an invalid value for the progress.
 		$output = wppb_get_progress_bar( false, false, 'invalid' );
+		$this->assertEquals( '<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 0%;"><span></span></span></div></div>', $output );
+
+		// Test the progress bar with a value for progress but 0% width.
+		$output = wppb_get_progress_bar( false, false, '50', false, '0%' );
 		$this->assertEquals( '<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 0%;"><span></span></span></div></div>', $output );
 
 		// Test the progress bar returning an exception when the progress and width values are invalid.
