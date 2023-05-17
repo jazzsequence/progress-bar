@@ -80,5 +80,12 @@ class WppbTestFunctions extends TestCase {
 			'<script>alert("XSS");</script>' // Endcolor
 		);
 		$this->assertEquals( '<div class="wppb-wrapper scriptalertXSSscript full"><div class="scriptalertXSSscript">50</div><div class="wppb-progress full"><span style="width: 50%;"><span></span></span></div></div>', $output );
+
+		// Test exception thrown if progress or width are empty.
+		$this->assertTrue( wppb_get_progress_bar( false, false, false, false, false, false, false, false, false ) instanceof WP_Error );
+
+		// Test exception not thrown if progress and width are 0.
+		$output = wppb_get_progress_bar( false, false, '0', false, '0%', false, false, false, false );
+		$this->assertEquals( '<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 0%;"><span></span></span></div></div>', $output );
 	}
 }
