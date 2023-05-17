@@ -3,8 +3,8 @@ Contributors: jazzs3quence
 Donate link: https://paypal.me/jazzsequence
 Tags: progress bar, css3, progress, shortcode
 Requires at least: 2.8
-Tested up to: 6.2
-Stable tag: 2.2.1
+Tested up to: 6.2.1
+Stable tag: 2.2.2
 
 A simple progress bar shortcode that can be styled with CSS
 
@@ -232,6 +232,10 @@ Supported values: any positive or negative decimal value from 0.0 to 1.0 or -1.0
 * 2.2.0 also adds the ability to use custom currencies in your progress bars rather than using the `test` option. See the [FAQ](http://wordpress.org/plugins/progress-bar/faq/) for more information.
 
 == Changelog ==
+
+** 2.2.2 **
+* use esc_attr instead of sanitize_text_field [[#20](https://github.com/jazzsequence/progress-bar/pull/20)]
+* Fix exception thrown on 0% progress bars [[#21](https://github.com/jazzsequence/progress-bar/pull/21)]
 
 ** 2.2.1 **
 * Adds tests for XSS vulnerabilities [[#11](https://github.com/jazzsequence/progress-bar/pull/11), [#15](https://github.com/jazzsequence/progress-bar/pull/15), [#17](https://github.com/jazzsequence/progress-bar/pull/17)
