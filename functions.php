@@ -133,14 +133,14 @@ function wppb_check_pos( $progress ) {
  */
 function wppb_get_progress_bar( $location = false, $text = false, $progress = '', $option = false, $width = '', $fullwidth = false, $color = false, $gradient = false, $gradient_end = false ) {
 	// Sanitize user input.
-	$location = sanitize_html_class( $location );
-	$text = sanitize_text_field( $text );
+	$location = esc_attr( sanitize_html_class( $location ) );
+	$text = esc_attr( $text );
 	$width = floatval( $width );
-	$fullwidth = sanitize_html_class( $fullwidth );
-	$color = sanitize_text_field( $color );
-	$gradient = sanitize_text_field( $gradient );
-	$gradient_end = sanitize_text_field( $gradient_end );
-	$option = sanitize_text_field( $option );
+	$fullwidth = esc_attr( sanitize_html_class( $fullwidth ) );
+	$color = esc_attr( $color );
+	$gradient = esc_attr( $gradient );
+	$gradient_end = esc_attr( $gradient_end );
+	$option = esc_attr( $option );
 
 	// Throw an exception if $progress or $width are empty.
 	try {
