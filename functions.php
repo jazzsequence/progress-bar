@@ -133,14 +133,14 @@ function wppb_check_pos( $progress ) {
  */
 function wppb_get_progress_bar( $location = false, $text = false, $progress = '', $option = false, $width = '', $fullwidth = false, $color = false, $gradient = false, $gradient_end = false ) {
 	// Sanitize user input.
-	$location = sanitize_html_class( $location );
-	$text = sanitize_text_field( $text );
+	$location = sanitize_html_class( esc_attr( $location ) );
+	$text = sanitize_text_field( esc_attr( $text ) );
 	$width = floatval( $width );
-	$fullwidth = sanitize_html_class( $fullwidth );
-	$color = sanitize_text_field( $color );
-	$gradient = sanitize_text_field( $gradient );
-	$gradient_end = sanitize_text_field( $gradient_end );
-	$option = sanitize_text_field( $option );
+	$fullwidth = sanitize_html_class( esc_attr( $fullwidth ) );
+	$color = esc_attr( wppb_sanitize_color( $color ) );
+	$gradient = esc_attr( wppb_sanitize_color( $gradient ) );
+	$gradient_end = esc_attr( wppb_sanitize_color( $gradient_end ) );
+	$option = esc_attr( wppb_sanitize_option( $option ) );
 
 	// Throw an exception if $progress or $width are empty.
 	try {
@@ -205,4 +205,227 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 	$wppb_output .= '</div>';
 	// Now return the progress bar.
 	return $wppb_output;
+}
+
+/**
+ * WPPB Sanitize Color.
+ * Sanitizes a color value and returns empty if a value is not a valid color.
+ *
+ * @since 2.2.2
+ * @param string|null $color The color to sanitize.
+ * @return string The sanitized color.
+ */
+function wppb_sanitize_color( string|null $color = '' ) {
+	if ( '' === $color ) {
+		return $color;
+	}
+
+	// Remove whitespace.
+	$color = trim( $color );
+
+	// Compare $color against wppb_css_color_names to see if it's a valid CSS color name. If so, return it.
+	if ( in_array( strtolower( $color ), wppb_css_color_names(), true ) ) {
+		return $color;
+	}
+
+	// Check if $color contains a hexadecimal or rgb value. If neither, return an empty string..
+	if ( false === strpos( $color, '#' ) && false === strpos( $color, 'rgb(' ) && false === strpos( $color, 'rgba(' ) ) {
+		// If the string is not a valid hexadecimal value, return an empty string.
+		if ( ! ctype_xdigit( $color ) && ( strlen( $color ) !== 3 || strlen( $color ) !== 6 ) ) {
+			return '';
+		}
+	}
+
+	// If $color contains a hex value, sanitize it.
+	if ( false !== strpos( $color, '#' ) ) {
+		$color = sanitize_hex_color( $color );
+	}
+
+	// If $color contains an rgb/rgba value, sanitize it.
+	if ( false !== strpos( $color, 'rgb(' ) || false !== strpos( $color, 'rgba(' ) ) {
+		$color = sanitize_text_field( $color );
+	}
+
+	// If $color is a hex, add a #.
+	if ( false === strpos( $color, '#' ) && ctype_xdigit( $color ) ) {
+		$color = '#' . $color;
+	}
+
+	// Return the sanitized color.
+	return $color;
+}
+
+/**
+ * WPPB Sanitize Option.
+ * Sanitizes the option parameter.
+ *
+ * @since 2.2.2
+ * @param string $option The option to sanitize.
+ * @return string The sanitized option.
+ */
+function wppb_sanitize_option( string $option ) {
+	// Break the option into an array separated by spaces.
+	$option_array = explode( ' ', $option );
+
+	// Loop through each item in the array and use sanitize_html_class to sanitize it.
+	foreach ( $option_array as $key => $value ) {
+		$option_array[ $key ] = sanitize_html_class( $value );
+	}
+
+	// Convert the array back into a string and return it.
+	return implode( ' ', $option_array );
+}
+
+/**
+ * Return an array of valid CSS color names.
+ *
+ * @since 2.2.2
+ * @return array An array of valid CSS color names.
+ */
+function wppb_css_color_names() {
+	return [
+		'aliceblue',
+		'antiquewhite',
+		'aqua',
+		'aquamarine',
+		'azure',
+		'beige',
+		'bisque',
+		'black',
+		'blanchedalmond',
+		'blue',
+		'blueviolet',
+		'brown',
+		'burlywood',
+		'cadetblue',
+		'chartreuse',
+		'chocolate',
+		'coral',
+		'cornflowerblue',
+		'cornsilk',
+		'crimson',
+		'cyan',
+		'darkblue',
+		'darkcyan',
+		'darkgoldenrod',
+		'darkgray',
+		'darkgreen',
+		'darkkhaki',
+		'darkmagenta',
+		'darkolivegreen',
+		'darkorange',
+		'darkorchid',
+		'darkred',
+		'darksalmon',
+		'darkseagreen',
+		'darkslateblue',
+		'darkslategray',
+		'darkturquoise',
+		'darkviolet',
+		'deeppink',
+		'deepskyblue',
+		'dimgray',
+		'dodgerblue',
+		'feldspar',
+		'firebrick',
+		'floralwhite',
+		'forestgreen',
+		'fuchsia',
+		'gainsboro',
+		'ghostwhite',
+		'gold',
+		'goldenrod',
+		'gray',
+		'green',
+		'greenyellow',
+		'honeydew',
+		'hotpink',
+		'indianred ',
+		'indigo ',
+		'ivory',
+		'khaki',
+		'lavender',
+		'lavenderblush',
+		'lawngreen',
+		'lemonchiffon',
+		'lightblue',
+		'lightcoral',
+		'lightcyan',
+		'lightgoldenrodyellow',
+		'lightgrey',
+		'lightgreen',
+		'lightpink',
+		'lightsalmon',
+		'lightseagreen',
+		'lightskyblue',
+		'lightslateblue',
+		'lightslategray',
+		'lightsteelblue',
+		'lightyellow',
+		'lime',
+		'limegreen',
+		'linen',
+		'magenta',
+		'maroon',
+		'mediumaquamarine',
+		'mediumblue',
+		'mediumorchid',
+		'mediumpurple',
+		'mediumseagreen',
+		'mediumslateblue',
+		'mediumspringgreen',
+		'mediumturquoise',
+		'mediumvioletred',
+		'midnightblue',
+		'mintcream',
+		'mistyrose',
+		'moccasin',
+		'navajowhite',
+		'navy',
+		'oldlace',
+		'olive',
+		'olivedrab',
+		'orange',
+		'orangered',
+		'orchid',
+		'palegoldenrod',
+		'palegreen',
+		'paleturquoise',
+		'palevioletred',
+		'papayawhip',
+		'peachpuff',
+		'peru',
+		'pink',
+		'plum',
+		'powderblue',
+		'purple',
+		'red',
+		'rosybrown',
+		'royalblue',
+		'saddlebrown',
+		'salmon',
+		'sandybrown',
+		'seagreen',
+		'seashell',
+		'sienna',
+		'silver',
+		'skyblue',
+		'slateblue',
+		'slategray',
+		'snow',
+		'springgreen',
+		'steelblue',
+		'tan',
+		'teal',
+		'thistle',
+		'tomato',
+		'turquoise',
+		'violet',
+		'violetred',
+		'wheat',
+		'white',
+		'whitesmoke',
+		'yellow',
+		'yellowgreen',
+	];
 }
