@@ -137,9 +137,9 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 	$text = esc_attr( $text );
 	$width = floatval( $width );
 	$fullwidth = esc_attr( sanitize_html_class( $fullwidth ) );
-	$color = esc_attr( $color );
-	$gradient = esc_attr( $gradient );
-	$gradient_end = esc_attr( $gradient_end );
+	$color = esc_attr( wppb_sanitize_color( $color ) );
+	$gradient = esc_attr( wppb_sanitize_color( $gradient ) );
+	$gradient_end = esc_attr( wppb_sanitize_color( $gradient_end ) );
 	$option = esc_attr( $option );
 
 	// Throw an exception if $progress or $width are empty.
@@ -205,4 +205,52 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 	$wppb_output .= '</div>';
 	// Now return the progress bar.
 	return $wppb_output;
+}
+
+/**
+ * WPPB Sanitize Color.
+ * Sanitizes a color value and returns empty if a value is not a valid color.
+ *
+ * @since 2.2.2
+ * @param string $color The color to sanitize.
+ * @return string The sanitized color.
+ */
+function wppb_sanitize_color( string|null $color = '' ) {
+	if ( '' === $color ) {
+		return $color;
+	}
+
+	// Remove whitespace.
+	$color = trim( $color );
+
+	// Compare $color against wppb_css_color_names to see if it's a valid CSS color name. If so, return it.
+	if ( in_array( strtolower( $color ), wppb_css_color_names(), true ) ) {
+		return $color;
+	}
+
+	// Check if $color contains a hexadecimal or rgb value. If neither, return an empty string..
+	if ( false === strpos( $color, '#' ) && false === strpos( $color, 'rgb(' ) && false === strpos( $color, 'rgba(' ) ) {
+		// If the string is not a valid hexadecimal value, return an empty string.
+		if ( ! ctype_xdigit( $color ) && ( strlen( $color ) !== 3 || strlen( $color ) !== 6 ) ) {
+			return '';
+		}
+	}
+
+	// If $color contains a hex value, sanitize it.
+	if ( false !== strpos( $color, '#' ) ) {
+		$color = sanitize_hex_color( $color );
+	}
+
+	// If $color contains an rgb/rgba value, sanitize it.
+	if ( false !== strpos( $color, 'rgb(' ) || false !== strpos( $color, 'rgba(' ) ) {
+		$color = sanitize_text_field( $color );
+	}
+
+	// If $color is a hex, add a #.
+	if ( false === strpos( $color, '#' ) && ctype_xdigit( $color ) ) {
+		$color = '#' . $color;
+	}
+
+	// Return the sanitized color.
+	return $color;
 }
