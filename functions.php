@@ -153,7 +153,7 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 		 * break old implementations, so trigger an exception and
 		 * _doing_it_wrong error if width or progress are empty.
 		 */
-		if ( empty( $progress ) || empty( $width ) ) {
+		if ( $progress === '' || $width === '' ) {
 			throw new Exception( $message );
 		}
 	} catch ( Exception $e ) {
