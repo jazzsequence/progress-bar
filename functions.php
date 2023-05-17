@@ -133,10 +133,10 @@ function wppb_check_pos( $progress ) {
  */
 function wppb_get_progress_bar( $location = false, $text = false, $progress = '', $option = false, $width = '', $fullwidth = false, $color = false, $gradient = false, $gradient_end = false ) {
 	// Sanitize user input.
-	$location = sanitize_html_class( esc_attr(  $location ) );
+	$location = sanitize_html_class( esc_attr( $location ) );
 	$text = sanitize_text_field( esc_attr( $text ) );
 	$width = floatval( $width );
-	$fullwidth = sanitize_html_class( esc_attr(  $fullwidth ) );
+	$fullwidth = sanitize_html_class( esc_attr( $fullwidth ) );
 	$color = esc_attr( wppb_sanitize_color( $color ) );
 	$gradient = esc_attr( wppb_sanitize_color( $gradient ) );
 	$gradient_end = esc_attr( wppb_sanitize_color( $gradient_end ) );
@@ -212,7 +212,7 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
  * Sanitizes a color value and returns empty if a value is not a valid color.
  *
  * @since 2.2.2
- * @param string $color The color to sanitize.
+ * @param string|null $color The color to sanitize.
  * @return string The sanitized color.
  */
 function wppb_sanitize_color( string|null $color = '' ) {
