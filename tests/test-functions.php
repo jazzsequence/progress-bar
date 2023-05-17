@@ -58,7 +58,7 @@ class WppbTestFunctions extends TestCase {
 
 		// Test the progress bar with an XSS vulnerability exposed.
 		$output = wppb_get_progress_bar( false, '<script>alert("XSS");</script>', '50', false, '50%', false, false, false, false );
-		$this->assertEquals( '<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 50%;"><span></span></span></div></div>', $output );
+		$this->assertEquals( '<div class="wppb-wrapper "><div class="inside">&lt;script&gt;alert(&quot;XSS&quot;);&lt;/script&gt;</div><div class="wppb-progress fixed"><span style="width: 50%;"><span></span></span></div></div>', $output );
 
 		// Test the progress bar with an XSS vulnerability exposed in the progress value.
 		$output = wppb_get_progress_bar( false, false, '<script>alert("XSS");</script>', false, '50%', false, false, false, false );
@@ -79,6 +79,93 @@ class WppbTestFunctions extends TestCase {
 			'<script>alert("XSS");</script>', // Gradient
 			'<script>alert("XSS");</script>' // Endcolor
 		);
-		$this->assertEquals( '<div class="wppb-wrapper scriptalertXSSscript full"><div class="scriptalertXSSscript">50</div><div class="wppb-progress full"><span style="width: 50%;"><span></span></span></div></div>', $output );
+		$this->assertEquals( '<div class="wppb-wrapper ltscriptgtalertquotXSSquotltscriptgt full"><div class="ltscriptgtalertquotXSSquotltscriptgt">&lt;script&gt;alert(&quot;XSS&quot;);&lt;/script&gt;</div><div class="wppb-progress full"><span class="scriptalertXSSscript" style="width: 50%;"><span></span></span></div></div>', $output );
+	}
+
+	// wppb_sanitize_color
+	public function test_wppb_sanitize_color() {
+		// Test a valid hex color.
+		$output = wppb_sanitize_color( 'ff0000' );
+		$this->assertEquals( '#ff0000', $output );
+
+		// Test a valid hex color with a hash.
+		$output = wppb_sanitize_color( '#ff0000' );
+		$this->assertEquals( '#ff0000', $output );
+
+		// Test a valid hex color with a hash and a leading space.
+		$output = wppb_sanitize_color( ' #ff0000' );
+		$this->assertEquals( '#ff0000', $output );
+
+		// Test a valid hex color with a hash and a trailing space.
+		$output = wppb_sanitize_color( '#ff0000 ' );
+		$this->assertEquals( '#ff0000', $output );
+
+		// Test a valid hex color with a hash and a leading and trailing space.
+		$output = wppb_sanitize_color( ' #ff0000 ' );
+		$this->assertEquals( '#ff0000', $output );
+
+		// Test a valid hex color with a hash and a leading and trailing space and a leading zero.
+		$output = wppb_sanitize_color( ' #0ff0000 ' );
+		$this->assertEquals( '', $output );
+
+		// Test a valid rgb color.
+		$output = wppb_sanitize_color( 'rgb(255, 0, 0)' );
+		$this->assertEquals( 'rgb(255, 0, 0)', $output );
+
+		// Test a valid rgb color with a opacity value.
+		$output = wppb_sanitize_color( 'rgba(255, 0, 0, 0.5)' );
+		$this->assertEquals( 'rgba(255, 0, 0, 0.5)', $output );
+
+		// Test a valid rgb color with a leading space.
+		$output = wppb_sanitize_color( ' rgb(255, 0, 0)' );
+		$this->assertEquals( 'rgb(255, 0, 0)', $output );
+
+		// Test a valid rgb color with a trailing space.
+		$output = wppb_sanitize_color( 'rgb(255, 0, 0) ' );
+		$this->assertEquals( 'rgb(255, 0, 0)', $output );
+
+		// Test a valid rgb color with a leading and trailing space.
+		$output = wppb_sanitize_color( ' rgb(255, 0, 0) ' );
+		$this->assertEquals( 'rgb(255, 0, 0)', $output );
+
+		// Test a valid CSS text color.
+		$output = wppb_sanitize_color( 'red' );
+		$this->assertEquals( 'red', $output );
+
+		// Test an invalid color.
+		$output = wppb_sanitize_color( 'invalid' );
+		$this->assertEquals( '', $output );
+
+		// Test an XSS attempt.
+		$output = wppb_sanitize_color( '<script>alert("XSS");</script>' );
+		$this->assertEquals( '', $output );
+	}
+
+	// wppb_sanitize_option
+	public function test_wppb_sanitize_option() {
+		// Test a valid option. Currently this is any string but in the future we might compare against an array of supported options.
+		$output = wppb_sanitize_option( 'candystripes' );
+		$this->assertEquals( 'candystripes', $output );
+
+		// Test an invalid option.
+		$output = wppb_sanitize_option( 'invalid' );
+		$this->assertEquals( 'invalid', $output );
+
+		// Test several optiosn.
+		$output = wppb_sanitize_option( 'candystripes invalid' );
+		$this->assertEquals( 'candystripes invalid', $output );
+
+		// Test an XSS attempt.
+		$output = wppb_sanitize_option( '<script>alert("XSS");</script>' );
+		$this->assertEquals( 'scriptalertXSSscript', $output );
+
+		// Test multiple valid options with a XSS attempt.
+		$output = wppb_sanitize_option( 'candystripes <script>alert("XSS");</script>' );
+		$this->assertEquals( 'candystripes scriptalertXSSscript', $output );
+
+		// Test multiple XSS attempts.
+		$output = wppb_sanitize_option( '<script>alert("XSS");</script> <script>alert("XSS");</script>' );
+		$this->assertEquals( 'scriptalertXSSscript scriptalertXSSscript', $output );
+
 	}
 }
