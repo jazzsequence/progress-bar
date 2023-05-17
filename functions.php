@@ -140,7 +140,7 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 	$color = esc_attr( wppb_sanitize_color( $color ) );
 	$gradient = esc_attr( wppb_sanitize_color( $gradient ) );
 	$gradient_end = esc_attr( wppb_sanitize_color( $gradient_end ) );
-	$option = esc_attr( $option );
+	$option = esc_attr( wppb_sanitize_option( $option ) );
 
 	// Throw an exception if $progress or $width are empty.
 	try {
@@ -255,6 +255,26 @@ function wppb_sanitize_color( string|null $color = '' ) {
 	return $color;
 }
 
+/**
+ * WPPB Sanitize Option.
+ * Sanitizes the option parameter.
+ *
+ * @since 2.2.2
+ * @param string $option The option to sanitize.
+ * @return string The sanitized option.
+ */
+function wppb_sanitize_option( string $option ) {
+	// Break the option into an array separated by spaces.
+	$option_array = explode( ' ', $option );
+
+	// Loop through each item in the array and use sanitize_html_class to sanitize it.
+	foreach ( $option_array as $key => $value ) {
+		$option_array[ $key ] = sanitize_html_class( $value );
+	}
+
+	// Convert the array back into a string and return it.
+	return implode( ' ', $option_array );
+}
 
 /**
  * Return an array of valid CSS color names.
