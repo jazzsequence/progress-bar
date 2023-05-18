@@ -6,4 +6,13 @@
 	<rule ref="Pantheon-WP">
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
 	</rule>
+
+	<rule ref="PHPCompatibilityWP">
+		<config name="testVersion" value="5.6-"/>
+		<config name="minimum_supported_wp_version" value="2.8"/>
+	</rule>
+
+	<rule ref="PHPCompatibility">
+		<config name="testVersion" value="5.6-"/>
+	</rule>
 </ruleset>
