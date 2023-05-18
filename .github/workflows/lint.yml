@@ -12,4 +12,4 @@ jobs:
       - uses: pantheon-systems/phpcompatibility-action@v1
         with:
           test-versions: 7.4-
-          paths: ${{ github.workspace }}/wp-progress-bar.php ${{ github.workspace }}/wppb-widget.php ${{ github.workspace }}/includes/functions.php
+          paths: ${{ github.workspace }}/wp-progress-bar.php ${{ github.workspace }}/wppb-widget.php ${{ github.workspace }}/functions.php
