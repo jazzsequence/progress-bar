@@ -173,6 +173,14 @@ class WppbTestFunctions extends TestCase {
 		// Test an XSS attempt.
 		$output = wppb_sanitize_color( '<script>alert("XSS");</script>' );
 		$this->assertEquals( '', $output );
+
+		// Test an empty value.
+		$output = wppb_sanitize_color( '' );
+		$this->assertEquals( '', $output );
+
+		// Test no parameter at all.
+		$output = wppb_sanitize_color();
+		$this->assertEquals( '', $output );
 	}
 
 	// wppb_sanitize_option

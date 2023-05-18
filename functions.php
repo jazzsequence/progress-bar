@@ -211,10 +211,10 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
  * Sanitizes a color value and returns empty if a value is not a valid color.
  *
  * @since 2.2.2
- * @param string|null $color The color to sanitize.
+ * @param string $color The color to sanitize.
  * @return string The sanitized color.
  */
-function wppb_sanitize_color( string|null $color = '' ) {
+function wppb_sanitize_color( $color = '' ) {
 	if ( '' === $color ) {
 		return $color;
 	}
