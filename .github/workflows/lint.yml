@@ -9,9 +9,7 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
       - name: Lint
         run: composer lint
-  phpcompatibility:
-      steps:
-        - uses: pantheon-systems/phpcompatibility-action@v1
-          with:
-            test-versions: 7.4-
-            paths: ${{ github.workspace }}/wp-progress-bar.php ${{ github.workspace }}/wppb-widget.php ${{ github.workspace }}/includes/functions.php
+      - uses: pantheon-systems/phpcompatibility-action@v1
+        with:
+          test-versions: 7.4-
+          paths: ${{ github.workspace }}/wp-progress-bar.php ${{ github.workspace }}/wppb-widget.php ${{ github.workspace }}/includes/functions.php
