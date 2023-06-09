@@ -1,6 +1,12 @@
 name: Lint
-on: [push, pull_request]
+on: [push]
 jobs:
+  wporg-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: pantheon-systems/action-wporg-validator@1.0.0
+        with:
+          type: plugin
   lint:
     runs-on: ubuntu-latest
     steps:
