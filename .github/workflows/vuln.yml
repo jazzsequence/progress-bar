@@ -1,5 +1,5 @@
 name: Scan for Vulnerabilities
-  on: [push]
+on: [push]
 jobs:
   vuln:
     runs-on: ubuntu-latest
