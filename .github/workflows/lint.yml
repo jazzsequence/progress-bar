@@ -4,7 +4,6 @@ jobs:
   wporg-validation:
     runs-on: ubuntu-latest
     steps:
-      - name: WP.org Code Validation
       - uses: pantheon-systems/action-wporg-validator@1.0.0
         with:
           type: plugin
