@@ -100,7 +100,7 @@ function wppb_check_pos( $progress ) {
 			$progress = str_replace( $currency, '', $progress );
 		}
 		$xofy = explode( '/', $progress );
-		if ( ! $xofy[1] ) {
+		if ( ! isset( $xofy[1] ) || ! is_numeric( $xofy[1] ) || $xofy[1] == 0 ) {
 			$xofy[1] = 100;
 		}
 		$percentage = $xofy[0] / $xofy[1] * 100;
