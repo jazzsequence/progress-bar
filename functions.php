@@ -132,15 +132,19 @@ function wppb_check_pos( $progress ) {
  * @throws Exception If $progress or $width are empty.
  */
 function wppb_get_progress_bar( $location = false, $text = false, $progress = '', $option = false, $width = '', $fullwidth = false, $color = false, $gradient = false, $gradient_end = false ) {
-	// Sanitize user input.
-	$location = sanitize_html_class( esc_attr( $location ) );
-	$text = sanitize_text_field( esc_attr( $text ) );
+	/*
+	 * Sanitize user input. 
+	 * This would be better handled as we're outputting the variables. We're pre-escaping here for convenience, but need to remember to not escape again later inside the strings.
+	 */
+	$location = esc_attr( $location );
+	$text = esc_attr( $text );
 	$width = floatval( $width );
-	$fullwidth = sanitize_html_class( esc_attr( $fullwidth ) );
-	$color = esc_attr( wppb_sanitize_color( $color ) );
-	$gradient = esc_attr( wppb_sanitize_color( $gradient ) );
-	$gradient_end = esc_attr( wppb_sanitize_color( $gradient_end ) );
-	$option = esc_attr( wppb_sanitize_option( $option ) );
+	$fullwidth = esc_attr( $fullwidth );
+	$color = esc_attr( $color );
+	$gradient = esc_attr( $gradient );
+	$gradient_end = esc_attr( $gradient_end );
+	$option = esc_attr( $option );
+	$progress = esc_html( $progress );
 
 	// Throw an exception if $progress or $width are empty.
 	try {
