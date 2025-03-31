@@ -153,7 +153,7 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 	// Calculate $gradient_end if missing.
 	if ( $gradient && $color && ! $gradient_end ) {
 		$gradient_end = wppb_brightness( $color, floatval( $gradient ) );
-	}	
+	}
 
 	// Throw an exception if $progress or $width are empty.
 	try {
@@ -237,8 +237,7 @@ function wppb_sanitize_color( $color = '' ) {
 	}
 
 	// Check if $color contains a hexadecimal or rgb value. If neither, return an empty string..
-	if ( 
-		false === strpos( $color, '#' ) && 
+	if ( false === strpos( $color, '#' ) && 
 		false === strpos( $color, 'rgb(' ) && 
 		false === strpos( $color, 'rgba(' ) 
 	) {
@@ -255,7 +254,7 @@ function wppb_sanitize_color( $color = '' ) {
 		// If sanitize_hex_color() failed, return early.
 		if ( ! is_string( $color ) || $color === '' ) {
 			return '';
-		}		
+		}
 	}
 
 	// If $color is a hex, add a #.

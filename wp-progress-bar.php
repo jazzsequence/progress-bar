@@ -34,7 +34,7 @@ require plugin_dir_path( __FILE__ ) . 'functions.php';
  *
  * @return string
  */
-function wppb_version() : string {
+function wppb_version(): string {
 	return '2.2.4';
 }
 
@@ -52,6 +52,18 @@ function wppb_init() {
 	}
 }
 add_action( 'init', 'wppb_init' );
+
+/**
+ * Register the widget.
+ *
+ * @author Chris Reynolds
+ * @since 2.0.1
+ * @uses WP_Widget
+ */
+function wppb_register_widget() {
+	register_widget( 'WPPB_Widget' );
+}
+add_action( 'widgets_init', 'wppb_register_widget' );
 
 /**
  * Progress Bar

@@ -7,18 +7,6 @@
  */
 
 /**
- * Register the widget.
- *
- * @author Chris Reynolds
- * @since 2.0.1
- * @uses WP_Widget
- */
-function wppb_register_widget() {
-	register_widget( 'WPPB_Widget' );
-}
-add_action( 'widgets_init', 'wppb_register_widget' );
-
-/**
  * Widget class for the Progress Bar.
  *
  * @since 2.0.1
@@ -102,7 +90,6 @@ class WPPB_Widget extends WP_Widget {
 		echo wp_kses_post( wppb_get_progress_bar( $location, $text, $percent, $option, $width, 'true' ) );
 		echo wp_kses_post( wpautop( $description ) );
 		echo wp_kses_post( $args['after_widget'] );
-
 	}
 
 	/**
