@@ -105,7 +105,7 @@ function wppb( $atts ) {
 	// Get the values of the shortcode attributes.
 	$progress = isset( $atts['progress'] ) ? sanitize_text_field( $atts['progress'] ) : '';
 	$option = isset( $atts['option'] ) ? sanitize_html_class( $atts['option'] ) : '';
-	$percent = isset( $atts['percent'] ) ? sanitize_text_field( $atts['percent'] )  : '';
+	$percent = isset( $atts['percent'] ) ? sanitize_text_field( $atts['percent'] ) : '';
 	$location = isset( $atts['location'] ) ? sanitize_html_class( $atts['location'] ) : '';
 	$fullwidth = isset( $atts['fullwidth'] ) ? sanitize_text_field( $atts['fullwidth'] ) : '';
 	$color = isset( $atts['color'] ) ? wppb_sanitize_color( $atts['color'] ) : '';
