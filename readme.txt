@@ -233,6 +233,10 @@ Supported values: any positive or negative decimal value from 0.0 to 1.0 or -1.0
 
 == Changelog ==
 
+** 2.2.4 **
+* Fixed XSS vulnerability reported by muhammad yudha for [Patchstack](https://patchstack.com)
+* Cleaned up and refactored some possibly buggy code and sanitization/escaping issues.
+
 ** 2.2.3 **
 * Fixed PHP < 8.0 backwards compatibility issue [[#24](https://github.com/jazzsequence/progress-bar/pull/24)]
 
