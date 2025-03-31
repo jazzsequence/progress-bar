@@ -185,7 +185,7 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 		$wppb_output .= "<div class=\"$location\">";
 		$wppb_output .= $progress;
 		$wppb_output .= '</div>';
-	} elseif ( ! $location && $text ) { // If the location is not set, but there is custom text.
+	} elseif ( ! $location && $text_exists ) { // If the location is not set, but there is custom text.
 		$wppb_output .= "<div class=\"inside\">$text</div>";
 	}
 	$wppb_output .= '<div class="wppb-progress';
