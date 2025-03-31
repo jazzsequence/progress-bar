@@ -97,13 +97,7 @@ class WPPB_Widget extends WP_Widget {
 			$location = null;
 		}
 
-		$option = null;
-		if ( $color ) {
-			$option .= $color;
-		}
-		if ( $candystripe ) {
-			$option .= ' ' . $candystripe;
-		}
+		$option = wppb_sanitize_option( trim( "$color $candystripe" ) );
 
 		echo wp_kses_post( wppb_get_progress_bar( $location, $text, $percent, $option, $width, 'true' ) );
 		echo wp_kses_post( wpautop( $description ) );
