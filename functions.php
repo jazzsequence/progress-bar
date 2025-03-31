@@ -234,7 +234,7 @@ function wppb_sanitize_color( $color = '' ) {
 	// Check if $color contains a hexadecimal or rgb value. If neither, return an empty string..
 	if ( false === strpos( $color, '#' ) && false === strpos( $color, 'rgb(' ) && false === strpos( $color, 'rgba(' ) ) {
 		// If the string is not a valid hexadecimal value, return an empty string.
-		if ( ! ctype_xdigit( $color ) && ( strlen( $color ) !== 3 || strlen( $color ) !== 6 ) ) {
+		if ( ! ctype_xdigit( $color ) || ( strlen( $color ) !== 3 && strlen( $color ) !== 6 ) ) {
 			return '';
 		}
 	}
