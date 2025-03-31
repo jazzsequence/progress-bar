@@ -139,15 +139,17 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 	 * Sanitize user input. 
 	 * This would be better handled as we're outputting the variables. We're pre-escaping here for convenience, but need to remember to not escape again later inside the strings.
 	 */
-	$location = isset( $location ) ? esc_attr( $location ) : $location;
-	$text = isset( $text ) ? esc_attr( $text ) : $text;
+	$location = isset( $location ) ? esc_attr( sanitize_html_class( $location ) ) : $location;
+	$text_exists = ! is_bool( $text ) && trim( $text ) !== '';
+	$text = $text_exists ? esc_html( sanitize_text_field( $text ) ) : $text;
 	$width = isset( $width ) ? floatval( $width ) : $width;
 	$fullwidth = isset( $fullwidth ) ? esc_attr( $fullwidth ) : $fullwidth;
-	$color = isset( $color ) ? esc_attr( $color ) : $color;
+	$color = is_string( $color ) ? esc_attr( wppb_sanitize_color( $color ) ) : '';
 	$gradient = isset( $gradient ) ? esc_attr( floatval( $gradient ) ) : $gradient;
-	$gradient_end = isset( $gradient_end ) ? esc_attr( $gradient_end ) : $gradient_end;
-	$option = isset( $option ) ? esc_attr( $option ) : $option;
-	$progress = isset( $progress ) ? esc_html( $progress ) : $progress;
+	$gradient_end = is_string( $gradient_end ) ? esc_attr( wppb_sanitize_color( $gradient_end ) ) : '';
+	$option = isset( $option ) ? esc_attr( wppb_sanitize_option( $option ) ) : $option;
+	$progress = isset( $progress ) ? esc_html( sanitize_text_field( $progress ) ) : $progress;
+
 
 	// Throw an exception if $progress or $width are empty.
 	try {
