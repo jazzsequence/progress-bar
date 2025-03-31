@@ -224,8 +224,8 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
  * @return string The sanitized color.
  */
 function wppb_sanitize_color( $color = '' ) {
-	if ( '' === $color ) {
-		return $color;
+	if ( ! is_string( $color ) ) {
+		return '';
 	}
 
 	// Remove whitespace.
