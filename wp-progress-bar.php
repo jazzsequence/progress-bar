@@ -103,15 +103,15 @@ function wppb( $atts ) {
 	], $atts );
 
 	// Get the values of the shortcode attributes.
-	$progress = isset( $atts['progress'] ) ? $atts['progress'] : '';
-	$option = isset( $atts['option'] ) ? $atts['option'] : '';
-	$percent = isset( $atts['percent'] ) ? $atts['percent'] : '';
-	$location = isset( $atts['location'] ) ? $atts['location'] : '';
-	$fullwidth = isset( $atts['fullwidth'] ) ? $atts['fullwidth'] : '';
-	$color = isset( $atts['color'] ) ? $atts['color'] : '';
-	$gradient = isset( $atts['gradient'] ) ? $atts['gradient'] : '';
-	$endcolor = isset( $atts['endcolor'] ) ? $atts['endcolor'] : '';
-	$text = isset( $atts['text'] ) ? $atts['text'] : '';
+	$progress = isset( $atts['progress'] ) ? sanitize_text_field( $atts['progress'] ) : '';
+	$option = isset( $atts['option'] ) ? sanitize_html_class( $atts['option'] ) : '';
+	$percent = isset( $atts['percent'] ) ? sanitize_text_field( $atts['percent'] )  : '';
+	$location = isset( $atts['location'] ) ? sanitize_html_class( $atts['location'] ) : '';
+	$fullwidth = isset( $atts['fullwidth'] ) ? sanitize_text_field( $atts['fullwidth'] ) : '';
+	$color = isset( $atts['color'] ) ? wppb_sanitize_color( $atts['color'] ) : '';
+	$gradient = isset( $atts['gradient'] ) ? sanitize_text_field( $atts['gradient'] ) : '';
+	$endcolor = isset( $atts['endcolor'] ) ? wppb_sanitize_color( $atts['endcolor'] ) : '';
+	$text = isset( $atts['text'] ) ? sanitize_text_field( $atts['text'] ) : '';
 
 	// Check the progress for a slash, indicating a fraction instead of a percent.
 	$wppb_check_results = wppb_check_pos( $progress );
