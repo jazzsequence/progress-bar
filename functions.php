@@ -99,17 +99,20 @@ function wppb_check_pos( $progress ) {
 			// If there's a currency symbol in the progress, it will break the math. Let's strip it out so we can add it back later.
 			$progress = str_replace( $currency, '', $progress );
 		}
+		
 		$xofy = explode( '/', $progress );
-		if ( ! isset( $xofy[1] ) || ! is_numeric( $xofy[1] ) || $xofy[1] == 0 ) {
-			$xofy[1] = 100;
-		}
-		$percentage = $xofy[0] / $xofy[1] * 100;
+
+		// Validate that both sides of the fraction are numeric.
+		$x = ( isset( $xofy[0] ) ) && is_numeric( $xofy[0] ) ? $xofy[0] : 0;
+		$y = ( isset( $xofy[1] ) ) && is_numeric( $xofy[1] ) ? $xofy[1] : 100;
+
+		$percentage = floatval( $x ) / floatval( $y ) * 100;
 		$width = $percentage . '%';
-		if ( $has_currency_symbol === false ) {
-			$progress = number_format_i18n( $xofy[0] ) . ' / ' . number_format_i18n( $xofy[1] );
+		if ( ! $has_currency_symbol ) {
+			$progress = number_format_i18n( $x ) . ' / ' . number_format_i18n( $y );
 		} else {
 			// If there's a currency symbol in the progress, display it manually.
-			$progress = $currency . number_format_i18n( $xofy[0] ) . ' / ' . $currency . number_format_i18n( $xofy[1] );
+			$progress = $currency . number_format_i18n( $x ) . ' / ' . $currency . number_format_i18n( $y );
 		}
 	}
 	return [ $progress, $width ]; // Pass both the progress and the width back.
