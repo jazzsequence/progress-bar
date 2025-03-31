@@ -93,8 +93,8 @@ class WppbTest extends TestCase {
 		$output = do_shortcode('[wppb progress=50 fullwidth=true]');
 		$this->assertEquals('<div class="wppb-wrapper  full"><div class="wppb-progress full"><span style="width: 50%;"><span></span></span></div></div>', $output);
 
-		// using anyting
-		$output = do_shortcode('[wppb progress=50 fullwidth=anything]');
+		// using "yes"
+		$output = do_shortcode('[wppb progress=50 fullwidth=yes]');
 		$this->assertEquals('<div class="wppb-wrapper  full"><div class="wppb-progress full"><span style="width: 50%;"><span></span></span></div></div>', $output);
 	}
 
@@ -105,11 +105,11 @@ class WppbTest extends TestCase {
 
 		// endcolor
 		$output = do_shortcode('[wppb progress=50 color=ff0000 endcolor=00ff00]');
-		$this->assertEquals('<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 50%; background: #ff0000;background: -moz-linear-gradient(top, #ff0000 0%, #00ff00 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff0000), color-stop(100%,#00ff00)); background: -webkit-linear-gradient(top, #ff0000 0%,#00ff00 100%); background: -o-linear-gradient(top, #ff0000 0%,#00ff00 100%); background: -ms-linear-gradient(top,  0%,#00ff00 100%); background: linear-gradient(top, #ff0000 0%,#00ff00 100%); ""><span></span></span></div></div>', $output);
+		$this->assertEquals('<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 50%; background: #ff0000;background: -moz-linear-gradient(top, #ff0000 0%, #00ff00 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff0000), color-stop(100%,#00ff00)); background: -webkit-linear-gradient(top, #ff0000 0%,#00ff00 100%); background: -o-linear-gradient(top, #ff0000 0%,#00ff00 100%); background: -ms-linear-gradient(top, #ff0000 0%,#00ff00 100%); background: linear-gradient(top, #ff0000 0%,#00ff00 100%); ""><span></span></span></div></div>', $output);
 
 		// rgb values
 		$output = do_shortcode('[wppb progress=50 color=rgb(255,0,0) endcolor=rgb(0,255,0)]');
-		$this->assertEquals('<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 50%; background: rgb(255,0,0);background: -moz-linear-gradient(top, rgb(255,0,0) 0%, rgb(0,255,0) 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,0,0)), color-stop(100%,rgb(0,255,0))); background: -webkit-linear-gradient(top, rgb(255,0,0) 0%,rgb(0,255,0) 100%); background: -o-linear-gradient(top, rgb(255,0,0) 0%,rgb(0,255,0) 100%); background: -ms-linear-gradient(top,  0%,rgb(0,255,0) 100%); background: linear-gradient(top, rgb(255,0,0) 0%,rgb(0,255,0) 100%); ""><span></span></span></div></div>', $output);
+		$this->assertEquals('<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 50%; background: rgb(255,0,0);background: -moz-linear-gradient(top, rgb(255,0,0) 0%, rgb(0,255,0) 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,0,0)), color-stop(100%,rgb(0,255,0))); background: -webkit-linear-gradient(top, rgb(255,0,0) 0%,rgb(0,255,0) 100%); background: -o-linear-gradient(top, rgb(255,0,0) 0%,rgb(0,255,0) 100%); background: -ms-linear-gradient(top, rgb(255,0,0) 0%,rgb(0,255,0) 100%); background: linear-gradient(top, rgb(255,0,0) 0%,rgb(0,255,0) 100%); ""><span></span></span></div></div>', $output);
 
 		// using color keyword
 		$output = do_shortcode('[wppb progress=50 color=lightYellow]');
@@ -119,15 +119,15 @@ class WppbTest extends TestCase {
 	public function test_gradient() {
 		// positive gradient
 		$output = do_shortcode('[wppb progress=50 color=ff0000 gradient=.1]');
-		$this->assertEquals('<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 50%; background: #ff0000;background: -moz-linear-gradient(top, #ff0000 0%, #ffe6e6 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff0000), color-stop(100%,#ffe6e6)); background: -webkit-linear-gradient(top, #ff0000 0%,#ffe6e6 100%); background: -o-linear-gradient(top, #ff0000 0%,#ffe6e6 100%); background: -ms-linear-gradient(top,  0%,#ffe6e6 100%); background: linear-gradient(top, #ff0000 0%,#ffe6e6 100%); ""><span></span></span></div></div>', $output);
+		$this->assertEquals('<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 50%; background: #ff0000;background: -moz-linear-gradient(top, #ff0000 0%, #ffe6e6 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff0000), color-stop(100%,#ffe6e6)); background: -webkit-linear-gradient(top, #ff0000 0%,#ffe6e6 100%); background: -o-linear-gradient(top, #ff0000 0%,#ffe6e6 100%); background: -ms-linear-gradient(top, #ff0000 0%,#ffe6e6 100%); background: linear-gradient(top, #ff0000 0%,#ffe6e6 100%); ""><span></span></span></div></div>', $output);
 
 		// negative gradient
 		$output = do_shortcode('[wppb progress=50 color=ff0000 gradient=-.1]');
-		$this->assertEquals('<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 50%; background: #ff0000;background: -moz-linear-gradient(top, #ff0000 0%, #1a0000 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff0000), color-stop(100%,#1a0000)); background: -webkit-linear-gradient(top, #ff0000 0%,#1a0000 100%); background: -o-linear-gradient(top, #ff0000 0%,#1a0000 100%); background: -ms-linear-gradient(top,  0%,#1a0000 100%); background: linear-gradient(top, #ff0000 0%,#1a0000 100%); ""><span></span></span></div></div>', $output);
+		$this->assertEquals('<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 50%; background: #ff0000;background: -moz-linear-gradient(top, #ff0000 0%, #1a0000 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff0000), color-stop(100%,#1a0000)); background: -webkit-linear-gradient(top, #ff0000 0%,#1a0000 100%); background: -o-linear-gradient(top, #ff0000 0%,#1a0000 100%); background: -ms-linear-gradient(top, #ff0000 0%,#1a0000 100%); background: linear-gradient(top, #ff0000 0%,#1a0000 100%); ""><span></span></span></div></div>', $output);
 
 		// broken color + gradient
 		$output = do_shortcode('[wppb progress=50 color=rgb(22,18,99 gradient=.1 ]');
-		$this->assertEquals('<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 50%; background: rgb(22,18,99;background: -moz-linear-gradient(top, rgb(22,18,99 0%, #e8e8f0 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(22,18,99), color-stop(100%,#e8e8f0)); background: -webkit-linear-gradient(top, rgb(22,18,99 0%,#e8e8f0 100%); background: -o-linear-gradient(top, rgb(22,18,99 0%,#e8e8f0 100%); background: -ms-linear-gradient(top,  0%,#e8e8f0 100%); background: linear-gradient(top, rgb(22,18,99 0%,#e8e8f0 100%); ""><span></span></span></div></div>', $output);
+		$this->assertEquals('<div class="wppb-wrapper "><div class="wppb-progress fixed"><span style="width: 50%; background: rgb(22,18,99;background: -moz-linear-gradient(top, rgb(22,18,99 0%, #e8e8f0 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(22,18,99), color-stop(100%,#e8e8f0)); background: -webkit-linear-gradient(top, rgb(22,18,99 0%,#e8e8f0 100%); background: -o-linear-gradient(top, rgb(22,18,99 0%,#e8e8f0 100%); background: -ms-linear-gradient(top, rgb(22,18,99 0%,#e8e8f0 100%); background: linear-gradient(top, rgb(22,18,99 0%,#e8e8f0 100%); ""><span></span></span></div></div>', $output);
 	}
 
 

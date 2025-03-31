@@ -3,8 +3,8 @@ Contributors: jazzs3quence
 Donate link: https://paypal.me/jazzsequence
 Tags: progress bar, css3, progress, shortcode
 Requires at least: 2.8
-Tested up to: 6.2.1
-Stable tag: 2.2.3
+Tested up to: 6.7.2
+Stable tag: 2.2.4
 
 A simple progress bar shortcode that can be styled with CSS
 
@@ -168,7 +168,7 @@ Supported values: any plain text string
 = fullwidth =
 
 Makes the progress bar take up 100% of the container. (Good for responsive layouts.) *Not* recommended for progress bars that exceed their goal.
-*Note:* `fullwidth` will actually take any value. If `fullwidth` is present at all, it will display a progress bar that is 100% wide. For example `fullwidth=foo` would output the same as `fullwidth=true`.
+*Note:* As of 2.2.4, `fullwidth` will _only take truthy_ values. Previously, it would accept any value, e.g. `fullwidth=foo` would output the same as `fullwidth=true`. This is no longer the case.
 
 Supported value: true
 
@@ -226,12 +226,20 @@ Supported values: any positive or negative decimal value from 0.0 to 1.0 or -1.0
 `[wppb progress=34 color=rgb(22,18,99) gradient=0.2]`
 
 == Upgrade Notice ==
+** 2.2.4 **
+
+* Previously, the `fullwidth` parameter would accept any value. This has been updated to use the PHP `FILTER_VALIDATE_BOOLEAN` constant so that only "truthy" values (1, true, "true", "yes", etc.) are supported.
+
 ** 2.2.0 **
 
 * 2.2.0 resolves possible XSS issues in the old plugin. It is recommended that you upgrade to the latest version to avoid cross-site scripting attacks.
 * 2.2.0 also adds the ability to use custom currencies in your progress bars rather than using the `test` option. See the [FAQ](http://wordpress.org/plugins/progress-bar/faq/) for more information.
 
 == Changelog ==
+
+** 2.2.4 **
+* Fixed XSS vulnerability reported by muhammad yudha for [Patchstack](https://patchstack.com)
+* Cleaned up and refactored some possibly buggy code and sanitization/escaping issues.
 
 ** 2.2.3 **
 * Fixed PHP < 8.0 backwards compatibility issue [[#24](https://github.com/jazzsequence/progress-bar/pull/24)]

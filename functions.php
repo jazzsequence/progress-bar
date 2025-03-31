@@ -99,17 +99,20 @@ function wppb_check_pos( $progress ) {
 			// If there's a currency symbol in the progress, it will break the math. Let's strip it out so we can add it back later.
 			$progress = str_replace( $currency, '', $progress );
 		}
+		
 		$xofy = explode( '/', $progress );
-		if ( ! $xofy[1] ) {
-			$xofy[1] = 100;
-		}
-		$percentage = $xofy[0] / $xofy[1] * 100;
+
+		// Validate that both sides of the fraction are numeric.
+		$x = ( isset( $xofy[0] ) ) && is_numeric( $xofy[0] ) ? $xofy[0] : 0;
+		$y = ( isset( $xofy[1] ) ) && is_numeric( $xofy[1] ) ? $xofy[1] : 100;
+
+		$percentage = floatval( $x ) / floatval( $y ) * 100;
 		$width = $percentage . '%';
 		if ( $has_currency_symbol === false ) {
-			$progress = number_format_i18n( $xofy[0] ) . ' / ' . number_format_i18n( $xofy[1] );
+			$progress = number_format_i18n( $x ) . ' / ' . number_format_i18n( $y );
 		} else {
 			// If there's a currency symbol in the progress, display it manually.
-			$progress = $currency . number_format_i18n( $xofy[0] ) . ' / ' . $currency . number_format_i18n( $xofy[1] );
+			$progress = $currency . number_format_i18n( $x ) . ' / ' . $currency . number_format_i18n( $y );
 		}
 	}
 	return [ $progress, $width ]; // Pass both the progress and the width back.
@@ -132,15 +135,25 @@ function wppb_check_pos( $progress ) {
  * @throws Exception If $progress or $width are empty.
  */
 function wppb_get_progress_bar( $location = false, $text = false, $progress = '', $option = false, $width = '', $fullwidth = false, $color = false, $gradient = false, $gradient_end = false ) {
-	// Sanitize user input.
-	$location = sanitize_html_class( esc_attr( $location ) );
-	$text = sanitize_text_field( esc_attr( $text ) );
-	$width = floatval( $width );
-	$fullwidth = sanitize_html_class( esc_attr( $fullwidth ) );
-	$color = esc_attr( wppb_sanitize_color( $color ) );
-	$gradient = esc_attr( wppb_sanitize_color( $gradient ) );
-	$gradient_end = esc_attr( wppb_sanitize_color( $gradient_end ) );
-	$option = esc_attr( wppb_sanitize_option( $option ) );
+	/*
+	 * Sanitize user input. 
+	 * This would be better handled as we're outputting the variables. We're pre-escaping here for convenience, but need to remember to not escape again later inside the strings.
+	 */
+	$location = isset( $location ) ? esc_attr( sanitize_html_class( $location ) ) : $location;
+	$text_exists = ! is_bool( $text ) && trim( $text ) !== '';
+	$text = $text_exists ? esc_html( sanitize_text_field( $text ) ) : $text;
+	$width = isset( $width ) ? floatval( $width ) : $width;
+	$fullwidth = isset( $fullwidth ) ? esc_attr( $fullwidth ) : $fullwidth;
+	$color = is_string( $color ) ? esc_attr( wppb_sanitize_color( $color ) ) : '';
+	$gradient = isset( $gradient ) ? esc_attr( floatval( $gradient ) ) : $gradient;
+	$gradient_end = is_string( $gradient_end ) ? esc_attr( wppb_sanitize_color( $gradient_end ) ) : '';
+	$option = isset( $option ) ? esc_attr( wppb_sanitize_option( $option ) ) : $option;
+	$progress = isset( $progress ) ? esc_html( sanitize_text_field( $progress ) ) : $progress;
+
+	// Calculate $gradient_end if missing.
+	if ( $gradient && $color && ! $gradient_end ) {
+		$gradient_end = wppb_brightness( $color, floatval( $gradient ) );
+	}
 
 	// Throw an exception if $progress or $width are empty.
 	try {
@@ -172,7 +185,7 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 		$wppb_output .= "<div class=\"$location\">";
 		$wppb_output .= $progress;
 		$wppb_output .= '</div>';
-	} elseif ( ! $location && $text ) { // If the location is not set, but there is custom text.
+	} elseif ( ! $location && $text_exists ) { // If the location is not set, but there is custom text.
 		$wppb_output .= "<div class=\"inside\">$text</div>";
 	}
 	$wppb_output .= '<div class="wppb-progress';
@@ -189,15 +202,11 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 	if ( $color ) { // If color is set.
 		$wppb_output .= " style=\"width: $width%; background: {$color};";
 		if ( $gradient_end ) {
-			$wppb_output .= "background: -moz-linear-gradient(top, {$color} 0%, $gradient_end 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,{$color}), color-stop(100%,$gradient_end)); background: -webkit-linear-gradient(top, {$color} 0%,$gradient_end 100%); background: -o-linear-gradient(top, {$color} 0%,$gradient_end 100%); background: -ms-linear-gradient(top, {$gradient} 0%,$gradient_end 100%); background: linear-gradient(top, {$color} 0%,$gradient_end 100%); \"";
+			$wppb_output .= "background: -moz-linear-gradient(top, {$color} 0%, $gradient_end 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,{$color}), color-stop(100%,$gradient_end)); background: -webkit-linear-gradient(top, {$color} 0%,$gradient_end 100%); background: -o-linear-gradient(top, {$color} 0%,$gradient_end 100%); background: -ms-linear-gradient(top, {$color} 0%,$gradient_end 100%); background: linear-gradient(top, {$color} 0%,$gradient_end 100%); \"";
 		}
-	} else {
-		$wppb_output .= " style=\"width: $width%;";
-	}
-	if ( $gradient && $color ) {
-		$wppb_output .= "background: -moz-linear-gradient(top, {$color} 0%, $gradient_end 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,{$color}), color-stop(100%,$gradient_end)); background: -webkit-linear-gradient(top, {$color} 0%,$gradient_end 100%); background: -o-linear-gradient(top, {$color} 0%,$gradient_end 100%); background: -ms-linear-gradient(top, {$gradient} 0%,$gradient_end 100%); background: linear-gradient(top, {$color} 0%,$gradient_end 100%); \"";
-	} else {
 		$wppb_output .= '"';
+	} else {
+		$wppb_output .= " style=\"width: $width%;\"";
 	}
 	$wppb_output .= '><span></span></span>';
 	$wppb_output .= '</div>';
@@ -215,8 +224,8 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
  * @return string The sanitized color.
  */
 function wppb_sanitize_color( $color = '' ) {
-	if ( '' === $color ) {
-		return $color;
+	if ( ! is_string( $color ) ) {
+		return '';
 	}
 
 	// Remove whitespace.
@@ -228,9 +237,12 @@ function wppb_sanitize_color( $color = '' ) {
 	}
 
 	// Check if $color contains a hexadecimal or rgb value. If neither, return an empty string..
-	if ( false === strpos( $color, '#' ) && false === strpos( $color, 'rgb(' ) && false === strpos( $color, 'rgba(' ) ) {
+	if ( false === strpos( $color, '#' ) && 
+		false === strpos( $color, 'rgb(' ) && 
+		false === strpos( $color, 'rgba(' ) 
+	) {
 		// If the string is not a valid hexadecimal value, return an empty string.
-		if ( ! ctype_xdigit( $color ) && ( strlen( $color ) !== 3 || strlen( $color ) !== 6 ) ) {
+		if ( ! ctype_xdigit( $color ) || ( strlen( $color ) !== 3 && strlen( $color ) !== 6 ) ) {
 			return '';
 		}
 	}
@@ -238,11 +250,11 @@ function wppb_sanitize_color( $color = '' ) {
 	// If $color contains a hex value, sanitize it.
 	if ( false !== strpos( $color, '#' ) ) {
 		$color = sanitize_hex_color( $color );
-	}
 
-	// If $color contains an rgb/rgba value, sanitize it.
-	if ( false !== strpos( $color, 'rgb(' ) || false !== strpos( $color, 'rgba(' ) ) {
-		$color = sanitize_text_field( $color );
+		// If sanitize_hex_color() failed, return early.
+		if ( ! is_string( $color ) || $color === '' ) {
+			return '';
+		}
 	}
 
 	// If $color is a hex, add a #.
@@ -339,8 +351,8 @@ function wppb_css_color_names() {
 		'greenyellow',
 		'honeydew',
 		'hotpink',
-		'indianred ',
-		'indigo ',
+		'indianred',
+		'indigo',
 		'ivory',
 		'khaki',
 		'lavender',

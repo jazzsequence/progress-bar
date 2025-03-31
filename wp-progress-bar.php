@@ -3,7 +3,7 @@
  * Plugin Name: Progress Bar
  * Plugin URI: https://github.com/jazzsequence/progress-bar
  * Description: A simple progress bar shortcode that can be styled with CSS.
- * Version: 2.2.3
+ * Version: 2.2.4
  * Author: Chris Reynolds
  * Author URI: https://progressbar.jazzsequence.com/
  * License: GPL3
@@ -34,8 +34,8 @@ require plugin_dir_path( __FILE__ ) . 'functions.php';
  *
  * @return string
  */
-function wppb_version() : string {
-	return '2.2.3';
+function wppb_version(): string {
+	return '2.2.4';
 }
 
 /**
@@ -52,6 +52,18 @@ function wppb_init() {
 	}
 }
 add_action( 'init', 'wppb_init' );
+
+/**
+ * Register the widget.
+ *
+ * @author Chris Reynolds
+ * @since 2.0.1
+ * @uses WP_Widget
+ */
+function wppb_register_widget() {
+	register_widget( 'WPPB_Widget' );
+}
+add_action( 'widgets_init', 'wppb_register_widget' );
 
 /**
  * Progress Bar
@@ -103,15 +115,15 @@ function wppb( $atts ) {
 	], $atts );
 
 	// Get the values of the shortcode attributes.
-	$progress = isset( $atts['progress'] ) ? $atts['progress'] : '';
-	$option = isset( $atts['option'] ) ? $atts['option'] : '';
-	$percent = isset( $atts['percent'] ) ? $atts['percent'] : '';
-	$location = isset( $atts['location'] ) ? $atts['location'] : '';
-	$fullwidth = isset( $atts['fullwidth'] ) ? $atts['fullwidth'] : '';
-	$color = isset( $atts['color'] ) ? $atts['color'] : '';
-	$gradient = isset( $atts['gradient'] ) ? $atts['gradient'] : '';
-	$endcolor = isset( $atts['endcolor'] ) ? $atts['endcolor'] : '';
-	$text = isset( $atts['text'] ) ? $atts['text'] : '';
+	$progress = isset( $atts['progress'] ) ? sanitize_text_field( $atts['progress'] ) : '';
+	$option = isset( $atts['option'] ) ? wppb_sanitize_option( $atts['option'] ) : '';
+	$percent = isset( $atts['percent'] ) ? sanitize_text_field( $atts['percent'] ) : '';
+	$location = isset( $atts['location'] ) ? $atts['location'] : ''; // Sanitization handled in wppb_get_progress_bar.
+	$fullwidth = isset( $atts['fullwidth'] ) ? filter_var( $atts['fullwidth'], FILTER_VALIDATE_BOOLEAN ) : '';
+	$color = isset( $atts['color'] ) ? wppb_sanitize_color( $atts['color'] ) : '';
+	$gradient = isset( $atts['gradient'] ) ? sanitize_text_field( $atts['gradient'] ) : '';
+	$endcolor = isset( $atts['endcolor'] ) ? wppb_sanitize_color( $atts['endcolor'] ) : '';
+	$text = isset( $atts['text'] ) ? sanitize_text_field( $atts['text'] ) : '';
 
 	// Check the progress for a slash, indicating a fraction instead of a percent.
 	$wppb_check_results = wppb_check_pos( $progress );
@@ -129,11 +141,6 @@ function wppb( $atts ) {
 		$location = 'inside';
 	}
 
-	// Sanitize any text content.
-	if ( $text !== '' ) {
-		$text = wp_strip_all_tags( $text );
-	}
-
 	// Figure out gradient stuff.
 	$gradient_end = null;
 	if ( $endcolor !== '' ) {
@@ -141,10 +148,6 @@ function wppb( $atts ) {
 	}
 	if ( $gradient !== '' && $color !== '' ) { // If a color AND gradient is set (gradient won't work without the starting color).
 		$gradient_end = wppb_brightness( $color, $gradient );
-	}
-
-	if ( $fullwidth !== '' ) {
-		$fullwidth = true;
 	}
 
 	$progress = $wppb_check_results[0];
