@@ -2,7 +2,7 @@
     "name": "jazzsequence/progress-bar",
     "description": "a simple progress bar shortcode that can be styled with CSS",
     "type": "wordpress-plugin",
-    "license": "GPLv2",
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Chris Reynolds",
