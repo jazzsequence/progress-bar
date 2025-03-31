@@ -129,11 +129,6 @@ function wppb( $atts ) {
 		$location = 'inside';
 	}
 
-	// Sanitize any text content.
-	if ( $text !== '' ) {
-		$text = wp_strip_all_tags( $text );
-	}
-
 	// Figure out gradient stuff.
 	$gradient_end = null;
 	if ( $endcolor !== '' ) {
