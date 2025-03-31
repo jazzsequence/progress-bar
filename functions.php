@@ -251,6 +251,11 @@ function wppb_sanitize_color( $color = '' ) {
 	// If $color contains a hex value, sanitize it.
 	if ( false !== strpos( $color, '#' ) ) {
 		$color = sanitize_hex_color( $color );
+
+		// If sanitize_hex_color() failed, return early.
+		if ( ! is_string( $color ) || $color === '' ) {
+			return '';
+		}		
 	}
 
 	// If $color is a hex, add a #.
