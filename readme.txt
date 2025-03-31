@@ -168,7 +168,7 @@ Supported values: any plain text string
 = fullwidth =
 
 Makes the progress bar take up 100% of the container. (Good for responsive layouts.) *Not* recommended for progress bars that exceed their goal.
-*Note:* `fullwidth` will actually take any value. If `fullwidth` is present at all, it will display a progress bar that is 100% wide. For example `fullwidth=foo` would output the same as `fullwidth=true`.
+*Note:* As of 2.2.4, `fullwidth` will _only take truthy_ values. Previously, it would accept any value, e.g. `fullwidth=foo` would output the same as `fullwidth=true`. This is no longer the case.
 
 Supported value: true
 
@@ -226,6 +226,10 @@ Supported values: any positive or negative decimal value from 0.0 to 1.0 or -1.0
 `[wppb progress=34 color=rgb(22,18,99) gradient=0.2]`
 
 == Upgrade Notice ==
+** 2.2.4 **
+
+* Previously, the `fullwidth` parameter would accept any value. This has been updated to use the PHP `FILTER_VALIDATE_BOOLEAN` constant so that only "truthy" values (1, true, "true", "yes", etc.) are supported.
+
 ** 2.2.0 **
 
 * 2.2.0 resolves possible XSS issues in the old plugin. It is recommended that you upgrade to the latest version to avoid cross-site scripting attacks.
