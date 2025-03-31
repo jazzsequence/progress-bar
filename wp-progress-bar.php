@@ -107,7 +107,7 @@ function wppb( $atts ) {
 	$option = isset( $atts['option'] ) ? wppb_sanitize_option( $atts['option'] ) : '';
 	$percent = isset( $atts['percent'] ) ? sanitize_text_field( $atts['percent'] ) : '';
 	$location = isset( $atts['location'] ) ? sanitize_html_class( $atts['location'] ) : '';
-	$fullwidth = isset( $atts['fullwidth'] ) ? sanitize_text_field( $atts['fullwidth'] ) : '';
+	$fullwidth = isset( $atts['fullwidth'] ) ? filter_var( $fullwidth, FILTER_VALIDATE_BOOLEAN ) : '';
 	$color = isset( $atts['color'] ) ? wppb_sanitize_color( $atts['color'] ) : '';
 	$gradient = isset( $atts['gradient'] ) ? wppb_sanitize_color( $atts['gradient'] ) : '';
 	$endcolor = isset( $atts['endcolor'] ) ? wppb_sanitize_color( $atts['endcolor'] ) : '';
@@ -136,10 +136,6 @@ function wppb( $atts ) {
 	}
 	if ( $gradient !== '' && $color !== '' ) { // If a color AND gradient is set (gradient won't work without the starting color).
 		$gradient_end = wppb_brightness( $color, $gradient );
-	}
-
-	if ( $fullwidth !== '' ) {
-		$fullwidth = true;
 	}
 
 	$progress = $wppb_check_results[0];
