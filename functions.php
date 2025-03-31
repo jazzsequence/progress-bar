@@ -150,6 +150,10 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 	$option = isset( $option ) ? esc_attr( wppb_sanitize_option( $option ) ) : $option;
 	$progress = isset( $progress ) ? esc_html( sanitize_text_field( $progress ) ) : $progress;
 
+	// Calculate $gradient_end if missing.
+	if ( $gradient && $color && ! $gradient_end ) {
+		$gradient_end = wppb_brightness( $color, floatval( $gradient ) );
+	}	
 
 	// Throw an exception if $progress or $width are empty.
 	try {
