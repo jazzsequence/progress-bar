@@ -93,8 +93,8 @@ class WppbTest extends TestCase {
 		$output = do_shortcode('[wppb progress=50 fullwidth=true]');
 		$this->assertEquals('<div class="wppb-wrapper  full"><div class="wppb-progress full"><span style="width: 50%;"><span></span></span></div></div>', $output);
 
-		// using anyting
-		$output = do_shortcode('[wppb progress=50 fullwidth=anything]');
+		// using "yes"
+		$output = do_shortcode('[wppb progress=50 fullwidth=yes]');
 		$this->assertEquals('<div class="wppb-wrapper  full"><div class="wppb-progress full"><span style="width: 50%;"><span></span></span></div></div>', $output);
 	}
 
