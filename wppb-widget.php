@@ -235,7 +235,7 @@ class WPPB_Widget extends WP_Widget {
 		</p>
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_name( 'text' ) ); ?>"><strong><?php esc_html_e( 'Text', 'wp-progress-bar' ); ?></strong></label>
-			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'text' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'text' ) ); ?>" type="text" value="<?php wp_kses_post( $text ); ?>" /><br />
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'text' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'text' ) ); ?>" type="text" value="<?php echo esc_attr( $text ); ?>" /><br />
 			<span class="description"><?php esc_html_e( 'Custom text to display (instead of the progress value). (optional).', 'wp-progress-bar' ); ?></span>
 		</p>
 		<p>
