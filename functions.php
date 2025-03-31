@@ -139,15 +139,15 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 	 * Sanitize user input. 
 	 * This would be better handled as we're outputting the variables. We're pre-escaping here for convenience, but need to remember to not escape again later inside the strings.
 	 */
-	$location = esc_attr( $location );
-	$text = esc_attr( $text );
-	$width = floatval( $width );
-	$fullwidth = esc_attr( $fullwidth );
-	$color = esc_attr( $color );
-	$gradient = esc_attr( $gradient );
-	$gradient_end = esc_attr( $gradient_end );
-	$option = esc_attr( $option );
-	$progress = esc_html( $progress );
+	$location = isset( $location ) ? esc_attr( $location ) : $location;
+	$text = isset( $text ) ? esc_attr( $text ) : $text;
+	$width = isset( $width ) ? floatval( $width ) : $width;
+	$fullwidth = isset( $fullwidth ) ? esc_attr( $fullwidth ) : $fullwidth;
+	$color = isset( $color ) ? esc_attr( $color ) : $color;
+	$gradient = isset( $gradient ) ? esc_attr( floatval( $gradient ) ) : $gradient;
+	$gradient_end = isset( $gradient_end ) ? esc_attr( $gradient_end ) : $gradient_end;
+	$option = isset( $option ) ? esc_attr( $option ) : $option;
+	$progress = isset( $progress ) ? esc_html( $progress ) : $progress;
 
 	// Throw an exception if $progress or $width are empty.
 	try {
