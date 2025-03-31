@@ -107,7 +107,7 @@ function wppb( $atts ) {
 	$option = isset( $atts['option'] ) ? wppb_sanitize_option( $atts['option'] ) : '';
 	$percent = isset( $atts['percent'] ) ? sanitize_text_field( $atts['percent'] ) : '';
 	$location = isset( $atts['location'] ) ? $atts['location'] : ''; // Sanitization handled in wppb_get_progress_bar.
-	$fullwidth = isset( $atts['fullwidth'] ) ? filter_var( $fullwidth, FILTER_VALIDATE_BOOLEAN ) : '';
+	$fullwidth = isset( $atts['fullwidth'] ) ? filter_var( $atts['fullwidth'], FILTER_VALIDATE_BOOLEAN ) : '';
 	$color = isset( $atts['color'] ) ? wppb_sanitize_color( $atts['color'] ) : '';
 	$gradient = isset( $atts['gradient'] ) ? sanitize_text_field( $atts['gradient'] ) : '';
 	$endcolor = isset( $atts['endcolor'] ) ? wppb_sanitize_color( $atts['endcolor'] ) : '';
