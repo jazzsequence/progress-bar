@@ -244,11 +244,6 @@ function wppb_sanitize_color( $color = '' ) {
 		$color = sanitize_hex_color( $color );
 	}
 
-	// If $color contains an rgb/rgba value, sanitize it.
-	if ( false !== strpos( $color, 'rgb(' ) || false !== strpos( $color, 'rgba(' ) ) {
-		$color = sanitize_text_field( $color );
-	}
-
 	// If $color is a hex, add a #.
 	if ( false === strpos( $color, '#' ) && ctype_xdigit( $color ) ) {
 		$color = '#' . $color;
