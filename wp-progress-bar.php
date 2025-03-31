@@ -109,7 +109,7 @@ function wppb( $atts ) {
 	$location = isset( $atts['location'] ) ? sanitize_html_class( $atts['location'] ) : '';
 	$fullwidth = isset( $atts['fullwidth'] ) ? filter_var( $fullwidth, FILTER_VALIDATE_BOOLEAN ) : '';
 	$color = isset( $atts['color'] ) ? wppb_sanitize_color( $atts['color'] ) : '';
-	$gradient = isset( $atts['gradient'] ) ? wppb_sanitize_color( $atts['gradient'] ) : '';
+	$gradient = isset( $atts['gradient'] ) ? sanitize_text_field( $atts['gradient'] ) : '';
 	$endcolor = isset( $atts['endcolor'] ) ? wppb_sanitize_color( $atts['endcolor'] ) : '';
 	$text = isset( $atts['text'] ) ? sanitize_text_field( $atts['text'] ) : '';
 
