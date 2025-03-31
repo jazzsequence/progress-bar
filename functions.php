@@ -108,7 +108,7 @@ function wppb_check_pos( $progress ) {
 
 		$percentage = floatval( $x ) / floatval( $y ) * 100;
 		$width = $percentage . '%';
-		if ( ! $has_currency_symbol ) {
+		if ( $has_currency_symbol === false ) {
 			$progress = number_format_i18n( $x ) . ' / ' . number_format_i18n( $y );
 		} else {
 			// If there's a currency symbol in the progress, display it manually.
