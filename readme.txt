@@ -5,6 +5,7 @@ Tags: progress bar, css3, progress, shortcode
 Requires at least: 2.8
 Tested up to: 6.7.2
 Stable tag: 2.2.4
+License: GPLv3
 
 A simple progress bar shortcode that can be styled with CSS
 
