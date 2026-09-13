@@ -141,8 +141,10 @@ function wppb_check_pos( $progress ) {
  */
 function wppb_get_progress_bar( $location = false, $text = false, $progress = '', $option = false, $width = '', $fullwidth = false, $color = false, $gradient = false, $gradient_end = false ) {
 	/*
-	 * Sanitize user input. 
-	 * This would be better handled as we're outputting the variables. We're pre-escaping here for convenience, but need to remember to not escape again later inside the strings.
+	 * Sanitize user input.
+	 * This would be better handled as we're outputting the variables. We're
+	 * pre-escaping here for convenience, but need to remember to not escape
+	 * again later inside the strings.
 	 */
 	$location = isset( $location ) ? esc_attr( sanitize_html_class( $location ) ) : $location;
 	$text_exists = ! is_bool( $text ) && trim( $text ) !== '';
