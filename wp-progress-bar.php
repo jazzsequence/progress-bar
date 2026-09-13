@@ -30,6 +30,11 @@
 	http://www.opensource.org/licenses/gpl-3.0.html
 */
 
+// Prevent direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 require plugin_dir_path( __FILE__ ) . 'wppb-widget.php';
 require plugin_dir_path( __FILE__ ) . 'functions.php';
 

@@ -7,6 +7,11 @@
  * @package WP_Progress_Bar
  */
 
+// Prevent direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Brightness.
  * Calculates a brighter or darker color based on the hex value given.

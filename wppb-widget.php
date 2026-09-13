@@ -6,6 +6,11 @@
  * @package WP_Progress_Bar
  */
 
+// Prevent direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Widget class for the Progress Bar.
  *

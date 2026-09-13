@@ -4,8 +4,17 @@ jobs:
   wporg-validation:
     runs-on: ubuntu-latest
     steps:
-      # The validator scans the workspace, so the plugin has to be in it.
       - uses: actions/checkout@v7
+      # Check what actually ships, not the repo. `git archive` applies the same
+      # .gitattributes export-ignore rules the deploy action uses, so tests/,
+      # bin/, .github/ and the dotfiles are excluded here exactly as they are
+      # from the released plugin. The directory must be named for the slug:
+      # the action derives PLUGIN_SLUG from basename(build-dir).
+      - name: Export the distributable
+        run: |
+          mkdir -p "$RUNNER_TEMP/progress-bar"
+          git archive HEAD | tar x --directory="$RUNNER_TEMP/progress-bar"
+          find "$RUNNER_TEMP/progress-bar" -type f | sort
       # Upstream Plugin Check rather than pantheon-systems/action-wporg-validator:
       # that wrapper pins plugin-check-action v1.1.2, which installs Plugin Check
       # from plugin-check.latest-stable.zip (landing in
@@ -15,7 +24,7 @@ jobs:
       # v1.1.9, which installs via `wp plugin install plugin-check`.
       - uses: WordPress/plugin-check-action@v1.1.9
         with:
-          build-dir: './'
+          build-dir: ${{ runner.temp }}/progress-bar
   lint:
     runs-on: ubuntu-latest
     steps:
