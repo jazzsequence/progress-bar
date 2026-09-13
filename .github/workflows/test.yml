@@ -7,7 +7,7 @@ jobs:
       mariadb:
         image: mariadb:10.5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Start MariaDB
         run: |
           sudo systemctl start mysql
