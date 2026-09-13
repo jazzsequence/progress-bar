@@ -6,6 +6,11 @@
  * @package WP_Progress_Bar
  */
 
+// Prevent direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Widget class for the Progress Bar.
  *
@@ -20,10 +25,10 @@ class WPPB_Widget extends WP_Widget {
 	public function __construct() {
 		$widget_options = [
 			'classname' => 'wppb-widget',
-			'description' => __( 'Allows you to add a progress bar to your sidebar.', 'wp-progress-bar' ),
+			'description' => __( 'Allows you to add a progress bar to your sidebar.', 'progress-bar' ),
 		];
 		$control_options = [ 'id_base' => 'wppb-widget' ];
-		parent::__construct( 'wppb-widget', __( 'Progress Bar', 'wp-progress-bar' ), $widget_options, $control_options );
+		parent::__construct( 'wppb-widget', __( 'Progress Bar', 'progress-bar' ), $widget_options, $control_options );
 	}
 
 	/**
@@ -141,38 +146,38 @@ class WPPB_Widget extends WP_Widget {
 			$description = ''; }
 		?>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>"><strong><?php esc_html_e( 'Title', 'wp-progress-bar' ); ?></strong></label>
+			<label for="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>"><strong><?php esc_html_e( 'Title', 'progress-bar' ); ?></strong></label>
 			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" /><br />
-			<span class="description"><?php esc_html_e( 'The widget title (optional).', 'wp-progress-bar' ); ?></span>
+			<span class="description"><?php esc_html_e( 'The widget title (optional).', 'progress-bar' ); ?></span>
 		</p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_name( 'progress' ) ); ?>"><strong><?php esc_html_e( 'Progress', 'wp-progress-bar' ); ?></strong></label>
+			<label for="<?php echo esc_attr( $this->get_field_name( 'progress' ) ); ?>"><strong><?php esc_html_e( 'Progress', 'progress-bar' ); ?></strong></label>
 			<input size="4" id="<?php echo esc_attr( $this->get_field_id( 'progress' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'progress' ) ); ?>" type="text" value="<?php echo esc_attr( $progress ); ?>" /><br />
-			<span class="description"><?php esc_html_e( 'Can be a numeric value or a fraction (like 5/6). (required)', 'wp-progress-bar' ); ?></span>
+			<span class="description"><?php esc_html_e( 'Can be a numeric value or a fraction (like 5/6). (required)', 'progress-bar' ); ?></span>
 		</p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_name( 'color' ) ); ?>"><strong><?php esc_html_e( 'Color', 'wp-progress-bar' ); ?></strong></label>
+			<label for="<?php echo esc_attr( $this->get_field_name( 'color' ) ); ?>"><strong><?php esc_html_e( 'Color', 'progress-bar' ); ?></strong></label>
 			<select name="<?php echo esc_attr( $this->get_field_name( 'color' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'color' ) ); ?>" class="widefat">
 				<?php
 				$colors = [
 					'red' => [
-						'name' => __( 'Red', 'wp-progress-bar' ),
+						'name' => __( 'Red', 'progress-bar' ),
 						'value' => 'red',
 					],
 					'blue' => [
-						'name' => __( 'Blue', 'wp-progress-bar' ),
+						'name' => __( 'Blue', 'progress-bar' ),
 						'value' => '',
 					],
 					'green' => [
-						'name' => __( 'Green', 'wp-progress-bar' ),
+						'name' => __( 'Green', 'progress-bar' ),
 						'value' => 'green',
 					],
 					'orange' => [
-						'name' => __( 'Orange', 'wp-progress-bar' ),
+						'name' => __( 'Orange', 'progress-bar' ),
 						'value' => 'orange',
 					],
 					'yellow' => [
-						'name' => __( 'Yellow', 'wp-progress-bar' ),
+						'name' => __( 'Yellow', 'progress-bar' ),
 						'value' => 'yellow',
 					],
 				];
@@ -185,29 +190,29 @@ class WPPB_Widget extends WP_Widget {
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_name( 'candystripe' ) ); ?>"><strong><?php esc_html_e( 'Candystripe', 'wp-progress-bar' ); ?></strong></label>
+			<label for="<?php echo esc_attr( $this->get_field_name( 'candystripe' ) ); ?>"><strong><?php esc_html_e( 'Candystripe', 'progress-bar' ); ?></strong></label>
 			<fieldset>
-			<label for="<?php echo esc_attr( $this->get_field_name( 'candystripe' ) ); ?>"><input type="radio" id="<?php echo esc_attr( $this->get_field_id( 'candystripe' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'candystripe' ) ); ?>" value="candystripe" <?php checked( 'candystripe', $candystripe ); ?> /> <?php esc_html_e( 'Candystripe', 'wp-progress-bar' ); ?></label><br />
-			<label for="<?php echo esc_attr( $this->get_field_name( 'animated-candystripe' ) ); ?>"><input type="radio" id="<?php echo esc_attr( $this->get_field_id( 'candystripe' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'candystripe' ) ); ?>" value="animated-candystripe" <?php checked( 'animated-candystripe', $candystripe ); ?> /> <?php esc_html_e( 'Animated Candystripe', 'wp-progress-bar' ); ?></label><br />
-			<label for="<?php echo esc_attr( $this->get_field_name( 'none' ) ); ?>"><input type="radio" id="<?php echo esc_attr( $this->get_field_id( 'candystripe' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'candystripe' ) ); ?>" value="none" <?php checked( 'none', $candystripe ); ?> /> <?php esc_html_e( 'None', 'wp-progress-bar' ); ?></label><br />
+			<label for="<?php echo esc_attr( $this->get_field_name( 'candystripe' ) ); ?>"><input type="radio" id="<?php echo esc_attr( $this->get_field_id( 'candystripe' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'candystripe' ) ); ?>" value="candystripe" <?php checked( 'candystripe', $candystripe ); ?> /> <?php esc_html_e( 'Candystripe', 'progress-bar' ); ?></label><br />
+			<label for="<?php echo esc_attr( $this->get_field_name( 'animated-candystripe' ) ); ?>"><input type="radio" id="<?php echo esc_attr( $this->get_field_id( 'candystripe' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'candystripe' ) ); ?>" value="animated-candystripe" <?php checked( 'animated-candystripe', $candystripe ); ?> /> <?php esc_html_e( 'Animated Candystripe', 'progress-bar' ); ?></label><br />
+			<label for="<?php echo esc_attr( $this->get_field_name( 'none' ) ); ?>"><input type="radio" id="<?php echo esc_attr( $this->get_field_id( 'candystripe' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'candystripe' ) ); ?>" value="none" <?php checked( 'none', $candystripe ); ?> /> <?php esc_html_e( 'None', 'progress-bar' ); ?></label><br />
 			</fieldset><br />
-			<span class="description"><?php esc_html_e( 'Whether the progress bar should have a candystripe.', 'wp-progress-bar' ); ?></span>
+			<span class="description"><?php esc_html_e( 'Whether the progress bar should have a candystripe.', 'progress-bar' ); ?></span>
 		</p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_name( 'location' ) ); ?>"><strong><?php esc_html_e( 'Location', 'wp-progress-bar' ); ?></strong></label>
+			<label for="<?php echo esc_attr( $this->get_field_name( 'location' ) ); ?>"><strong><?php esc_html_e( 'Location', 'progress-bar' ); ?></strong></label>
 			<select name="<?php echo esc_attr( $this->get_field_name( 'location' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'location' ) ); ?>" class="widefat">
 				<?php
 					$locations = [
 						'inside' => [
-							'name' => __( 'Inside', 'wp-progress-bar' ),
+							'name' => __( 'Inside', 'progress-bar' ),
 							'value' => 'inside',
 						],
 						'outside' => [
-							'name' => __( 'Outside', 'wp-progress-bar' ),
+							'name' => __( 'Outside', 'progress-bar' ),
 							'value' => 'outside',
 						],
 						'none' => [
-							'name' => __( 'None', 'wp-progress-bar' ),
+							'name' => __( 'None', 'progress-bar' ),
 							'value' => 'none',
 						],
 					];
@@ -218,22 +223,22 @@ class WPPB_Widget extends WP_Widget {
 					}
 					?>
 			</select>
-			<span class="description"><?php esc_html_e( 'Displays the progress either inside or outside the progress bar or not at all if "None" is selected.', 'wp-progress-bar' ); ?></span>
+			<span class="description"><?php esc_html_e( 'Displays the progress either inside or outside the progress bar or not at all if "None" is selected.', 'progress-bar' ); ?></span>
 		</p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_name( 'text' ) ); ?>"><strong><?php esc_html_e( 'Text', 'wp-progress-bar' ); ?></strong></label>
+			<label for="<?php echo esc_attr( $this->get_field_name( 'text' ) ); ?>"><strong><?php esc_html_e( 'Text', 'progress-bar' ); ?></strong></label>
 			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'text' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'text' ) ); ?>" type="text" value="<?php echo esc_attr( $text ); ?>" /><br />
-			<span class="description"><?php esc_html_e( 'Custom text to display (instead of the progress value). (optional).', 'wp-progress-bar' ); ?></span>
+			<span class="description"><?php esc_html_e( 'Custom text to display (instead of the progress value). (optional).', 'progress-bar' ); ?></span>
 		</p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_name( 'description' ) ); ?>"><strong><?php esc_html_e( 'Description', 'wp-progress-bar' ); ?></strong></label>
+			<label for="<?php echo esc_attr( $this->get_field_name( 'description' ) ); ?>"><strong><?php esc_html_e( 'Description', 'progress-bar' ); ?></strong></label>
 			<textarea
 				class="widefat"
 				id="<?php echo esc_attr( $this->get_field_id( 'description' ) ); ?>"
 				name="<?php echo esc_attr( $this->get_field_name( 'description' ) ); ?>">
 					<?php echo wp_kses_post( $description ); ?>
 			</textarea><br />
-			<span class="description"><?php esc_html_e( 'A block of text that displays under the progress bar to describe what the progress bar is for. (optional).', 'wp-progress-bar' ); ?></span>
+			<span class="description"><?php esc_html_e( 'A block of text that displays under the progress bar to describe what the progress bar is for. (optional).', 'progress-bar' ); ?></span>
 		</p>
 		<?php
 	}

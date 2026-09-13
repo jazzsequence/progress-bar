@@ -2,10 +2,12 @@
 Contributors: jazzs3quence
 Donate link: https://paypal.me/jazzsequence
 Tags: progress bar, css3, progress, shortcode
-Requires at least: 2.8
-Tested up to: 6.7.2
-Stable tag: 2.2.4
+Requires at least: 3.4
+Tested up to: 7.1
+Requires PHP: 7.0
+Stable tag: 2.2.5
 License: GPLv3
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 A simple progress bar shortcode that can be styled with CSS
 
@@ -227,6 +229,10 @@ Supported values: any positive or negative decimal value from 0.0 to 1.0 or -1.0
 `[wppb progress=34 color=rgb(22,18,99) gradient=0.2]`
 
 == Upgrade Notice ==
+** 2.2.5 **
+
+* Housekeeping release. The plugin's text domain changed from `wp-progress-bar` to `progress-bar` so that translations from WordPress.org actually load. If you maintain your own translation files for this plugin, rename them to match.
+
 ** 2.2.4 **
 
 * Previously, the `fullwidth` parameter would accept any value. This has been updated to use the PHP `FILTER_VALIDATE_BOOLEAN` constant so that only "truthy" values (1, true, "true", "yes", etc.) are supported.
@@ -237,6 +243,13 @@ Supported values: any positive or negative decimal value from 0.0 to 1.0 or -1.0
 * 2.2.0 also adds the ability to use custom currencies in your progress bars rather than using the `test` option. See the [FAQ](http://wordpress.org/plugins/progress-bar/faq/) for more information.
 
 == Changelog ==
+
+** 2.2.5 **
+* Fixed the text domain: it was `wp-progress-bar`, which does not match the plugin slug, so WordPress never loaded any translations for it. It is now `progress-bar`.
+* Added the missing `Text Domain`, `Requires at least`, `Requires PHP` and `License URI` plugin headers.
+* Declared the real minimum versions: WordPress 3.4 (`sanitize_hex_color()`) and PHP 7.0 (the `: string` return type on `wppb_version()`).
+* Tested up to WordPress 7.1.
+* Removed the vulnerability scan workflow. It depended on an abandoned scanner package reading a Wordfence feed that now returns HTTP 410, and reported any failure as "vulnerabilities found".
 
 ** 2.2.4 **
 * Fixed XSS vulnerability reported by muhammad yudha for [Patchstack](https://patchstack.com)
