@@ -6,9 +6,16 @@ jobs:
     steps:
       # The validator scans the workspace, so the plugin has to be in it.
       - uses: actions/checkout@v7
-      - uses: pantheon-systems/action-wporg-validator@v2.0.0
+      # Upstream Plugin Check rather than pantheon-systems/action-wporg-validator:
+      # that wrapper pins plugin-check-action v1.1.2, which installs Plugin Check
+      # from plugin-check.latest-stable.zip (landing in
+      # wp-content/plugins/plugin-check.latest-stable/) but then passes
+      # --require=./wp-content/plugins/plugin-check/cli.php, so the run always
+      # dies with "Required file 'cli.php' doesn't exist". Fixed upstream in
+      # v1.1.9, which installs via `wp plugin install plugin-check`.
+      - uses: WordPress/plugin-check-action@v1.1.9
         with:
-          type: plugin
+          build-dir: './'
   lint:
     runs-on: ubuntu-latest
     steps:
