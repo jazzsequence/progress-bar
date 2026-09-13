@@ -10,8 +10,8 @@
 /.Thumbs.db export-ignore
 /.gitattributes export-ignore
 /.gitignore export-ignore
-/.phpunit.xml export-ignore
-/.phpcs.ruleset.xml export-ignore
+/phpunit.xml export-ignore
+/phpcs.ruleset.xml export-ignore
 /CODEOWNERS export-ignore
 /composer.json export-ignore
 /composer.lock export-ignore

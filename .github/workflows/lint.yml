@@ -4,18 +4,20 @@ jobs:
   wporg-validation:
     runs-on: ubuntu-latest
     steps:
-      - uses: pantheon-systems/action-wporg-validator@1.0.0
+      # The validator scans the workspace, so the plugin has to be in it.
+      - uses: actions/checkout@v4
+      - uses: pantheon-systems/action-wporg-validator@v2.0.0
         with:
           type: plugin
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
+        run: composer install --prefer-dist --no-progress --optimize-autoloader
       - name: Lint
         run: composer lint
       - uses: pantheon-systems/phpcompatibility-action@v1
         with:
-          test-versions: 7.4-
+          test-versions: 7.0-
           paths: ${{ github.workspace }}/wp-progress-bar.php ${{ github.workspace }}/wppb-widget.php ${{ github.workspace }}/functions.php

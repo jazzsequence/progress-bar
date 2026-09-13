@@ -1,6 +1,6 @@
 # Progress Bar
 
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/jazzsequence/progress-bar) [![Test Status](https://img.shields.io/github/actions/workflow/status/jazzsequence/progress-bar/test.yml?label=Test%20Status)](https://github.com/jazzsequence/progress-bar/actions/workflows/test.yml) [![Lint Status](https://img.shields.io/github/actions/workflow/status/jazzsequence/progress-bar/lint.yml?label=Lint)](https://github.com/jazzsequence/progress-bar/actions/workflows/lint.yml) [![Vulnerability Scan](https://img.shields.io/github/actions/workflow/status/jazzsequence/progress-bar/vuln.yml?label=Vulnerability%20Scan)](https://github.com/jazzsequence/progress-bar/actions/workflows/vuln.yml)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/jazzsequence/progress-bar) [![Test Status](https://img.shields.io/github/actions/workflow/status/jazzsequence/progress-bar/test.yml?label=Test%20Status)](https://github.com/jazzsequence/progress-bar/actions/workflows/test.yml) [![Lint Status](https://img.shields.io/github/actions/workflow/status/jazzsequence/progress-bar/lint.yml?label=Lint)](https://github.com/jazzsequence/progress-bar/actions/workflows/lint.yml)
 
 [![Donate to this plugin!](https://img.shields.io/badge/Donate-via%20PayPal-blue?logo=paypal&labelColor=blue)](https://paypal.me/jazzsequence)
 

@@ -157,7 +157,7 @@ function wppb_get_progress_bar( $location = false, $text = false, $progress = ''
 
 	// Throw an exception if $progress or $width are empty.
 	try {
-		$message = esc_html__( 'You must pass at least a progress value to wppb_get_progress_bar.', 'wp-progress-bar' );
+		$message = esc_html__( 'You must pass at least a progress value to wppb_get_progress_bar.', 'progress-bar' );
 
 		/*
 		 * If $progress is empty, throw an exception. This is because this
